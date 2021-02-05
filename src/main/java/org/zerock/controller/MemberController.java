@@ -20,7 +20,7 @@ public class MemberController {
 	
 	@GetMapping("/joinForm")
 	public void register() {
-	//get형식으로는 모르겠다
+	//get형식으로는 모르겠당!
 	}
 	
 	@PostMapping("/joinForm")
