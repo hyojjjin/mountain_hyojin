@@ -21,18 +21,20 @@ public class MemberMapperTests {
 	@Autowired
 	private MemberMapper mapper;
 	
+	//전체 회원 리스트
 	@Test
 	public void testGetList() {
 		List<MemberVO> list = mapper.getList();
 		assertEquals(list.size(), 0);
 	}
 	
+	//회원 가입
 	@Test
 	public void testInsertSelectKey() {
 		MemberVO member = new MemberVO();
 		member.setId("hi");
 		member.setEmail("hyo@jin.com");
-		member.setPassword(123);
+		member.setPassword("123");
 		member.setName("hyojin");
 		member.setNickname("hyojiny");
 		member.setLoc("home");
@@ -46,20 +48,27 @@ public class MemberMapperTests {
 		assertEquals(before+1, after);
 	}
 	
+	//회원 정보 읽기 - 아이디
+	@Test
+	public void testReadMember() {
+		MemberVO member = mapper.readMember("hi");
+		log.info(member);
+	}
+	
+	//회원 정보 읽기 - no
 	@Test
 	public void testRead() {
 		MemberVO member = mapper.read(6L);
 		log.info(member);
 	}
-	//이거 알아보려면 가상의 데이터를 넣어봐야함
-	//내일 데이터 베이스에 회원 가입 한개 넣어서 테스트 확인.
 	
+	//회원 정보 수정
 	@Test
 	public void testUpdate() {
 		MemberVO member = new MemberVO();
 		member.setId("hi5");
 		member.setEmail("kimhyo5@jin.com");
-		member.setPassword(123);
+		member.setPassword("123");
 		member.setName("kimhyojin");
 		member.setNickname("kimhyojiny5");
 		member.setLoc("myhome");
@@ -67,7 +76,7 @@ public class MemberMapperTests {
 		mapper.insertSelectKey(member);
 		
 		member.setEmail("modifyhyo5@jin.com");
-		member.setPassword(111);
+		member.setPassword("111");
 		member.setNickname("modifykimhyojiny5");
 		member.setLoc("modifymyhome");
 		
@@ -78,12 +87,13 @@ public class MemberMapperTests {
 		
 		MemberVO updateMember = mapper.read(member.getNo());
 		assertEquals("modifyhyo5@jin.com", updateMember.getEmail());
-		assertEquals(111, updateMember.getPassword());
+		assertEquals("111", updateMember.getPassword());
 		assertEquals("modifykimhyojiny5", updateMember.getNickname());
 		assertEquals("modifymyhome", updateMember.getLoc());
 		
 	}
 	
+	//회원 탈퇴(삭제)
 	@Test
 	public void testDelete() {
 		int before = mapper.getList().size();

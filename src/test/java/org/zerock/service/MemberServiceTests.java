@@ -24,12 +24,13 @@ public class MemberServiceTests {
 	@Autowired
 	private MemberMapper mapper;
 	
+	//회원 등록
 	@Test
 	public void testRegister() {
 		MemberVO member = new MemberVO();
 		member.setId("hi5");
 		member.setEmail("kimhyo5@jin.com");
-		member.setPassword(123);
+		member.setPassword("123");
 		member.setName("kimhyojin");
 		member.setNickname("kimhyojiny5");
 		member.setLoc("myhome");
@@ -44,6 +45,16 @@ public class MemberServiceTests {
 		
 	}
 	
+	//회원 정보 읽기 - 아이디 
+	@Test
+	public void testGetMember() {
+		MemberVO member = service.getMember("hi");
+		
+		log.info(member);
+		
+	}
+	
+	//회원 정보 읽기 - no
 	@Test
 	public void testGet() {
 		MemberVO member = service.get(6L);
@@ -52,12 +63,13 @@ public class MemberServiceTests {
 		
 	}
 	
+	//회원 정보 수정
 	@Test
 	public void testModify() {
 		MemberVO member = new MemberVO();
 		member.setId("hi9");
 		member.setEmail("kimhyo9@jin.com");
-		member.setPassword(123);
+		member.setPassword("123");
 		member.setName("kimhyojin");
 		member.setNickname("kimhyojiny9");
 		member.setLoc("myhome");
@@ -67,7 +79,7 @@ public class MemberServiceTests {
 		MemberVO modifyMember = new MemberVO();
 		modifyMember.setNo(member.getNo());
 		modifyMember.setEmail("modifyhyo9@jin.com");
-		modifyMember.setPassword(111);
+		modifyMember.setPassword("111");
 		modifyMember.setNickname("modifykimhyojiny9");
 		modifyMember.setLoc("modifymyhome");
 		
@@ -76,12 +88,13 @@ public class MemberServiceTests {
 		MemberVO member2 = service.get(member.getNo());
 		
 		assertEquals("modifyhyo9@jin.com", member2.getEmail());
-		assertEquals(111, member2.getPassword());
+		assertEquals("111", member2.getPassword());
 		assertEquals("modifykimhyojiny9", member2.getNickname());
 		assertEquals("modifymyhome", member2.getLoc());
 
 	}
 	
+	//회원 탈퇴(삭제)
 	@Test
 	public void testRemove() {
 		assertTrue(service.remove(32L));

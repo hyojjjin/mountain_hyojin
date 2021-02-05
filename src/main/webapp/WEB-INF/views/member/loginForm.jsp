@@ -20,7 +20,9 @@
 <title>산산산</title>
 </head>
 <body>
+
 <m:topNav />
+
 <form method="post">
   <div class="form-group row">
     <label for="inputId" class="col-sm-2 col-form-label">아이디</label>
@@ -35,41 +37,9 @@
     </div>
   </div>
   
-    <div class="form-group row">
-    <label for="inputEmail" class="col-sm-2 col-form-label">E-mail</label>
-    <div class="col-sm-10">
-      <input type="text" name="email" class="form-control" id="inputEmail">
-    </div>
-  </div>
-  
-      <div class="form-group row">
-    <label for="inputName" class="col-sm-2 col-form-label">이름</label>
-    <div class="col-sm-10">
-      <input type="text" name="name" class="form-control" id="inputName">
-    </div>
-  </div>
-  
-  
-  <div class="form-group row">
-    <label for="inputNickname" class="col-sm-2 col-form-label">닉네임</label>
-    <div class="col-sm-10">
-      <input type="text" name="nickname" class="form-control" id="inputNickname">
-    </div>
-  </div>
-  
-  <div class="form-group row">
-    <label for="inputLoc" class="col-sm-2 col-form-label">지역</label>
-    <div class="col-sm-10">
-      <input type="text" name="loc" class="form-control" id="inputLoc">
-    </div>
-  </div>
-  
-  
-   <button type="submit" class="btn btn-primary">회원 가입</button>
+   <button type="submit" class="btn btn-primary">로그인</button>
   
 </form>
-
-
 
 </body>
 </html>
