@@ -10,6 +10,8 @@ public class MemberVO {
 	private String email;
 	private String name;
 	private String nickname;
-	private String loc;
+	private String loc;	
 	private int manager; //관리자
+	
+	private String pwConfirm; //비밀번호 확인
 }

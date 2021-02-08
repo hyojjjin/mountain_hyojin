@@ -11,4 +11,5 @@ public interface MemberService {
 	public boolean remove(Long no); //회원 탈퇴(삭제)
 	
 	
+	
 }

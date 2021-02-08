@@ -1,5 +1,8 @@
 package org.zerock.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -7,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.MemberVO;
 import org.zerock.service.MemberService;
 
@@ -22,17 +24,34 @@ public class MemberController {
 
 	private MemberService service;
 
-	// ##회원가입
+	// ##회원가입 - GET
 	@GetMapping("/join")
 	public void register() {
 		// get형식으로는 모르겠당!
 	}
 
+	// ##회원가입 - POST
 	@PostMapping("/join")
-	public String register(MemberVO member) {
-		service.register(member);
-		// 서비스에 일을 시키고
-		return "redirect:/index.jsp";
+	public String register(MemberVO member, HttpServletRequest req) {
+		
+		Map<String, Boolean> errors = new HashMap<String, Boolean>();
+		req.setAttribute("errors", errors);
+		validate(errors, member);
+		
+		if (errors.isEmpty()) {
+			service.register(member);
+			// 서비스에 일을 시키고
+			return "redirect:joinSuccess";
+			
+
+		} else {
+			return "/member/join";
+		}
+		
+	}
+	// ##로그인 성공 메시지
+	@GetMapping("/joinSuccess")
+	public void joinSuccess() {
 	}
 
 	// ##로그인 - GET
@@ -72,13 +91,49 @@ public class MemberController {
 			return "";
 	}
 	
+	
+	// ##로그아웃 
+	@GetMapping("/logout")
+	public String logout(MemberVO member, HttpSession session) {
+		
+		if(session != null) {
+			session.invalidate();
+		}
+		
+		return "redirect:/index.jsp";
+	}
+	//로그아웃 post 방식은?? 왜 겟방식이지
+	
+	// ##joinErrors 
+	public void validate(Map<String, Boolean> errors, MemberVO member) {
+		checkEmpty(errors, member.getId(), "memberId");
+		checkEmpty(errors, member.getPassword(), "memberPw");
+		checkEmpty(errors, member.getPwConfirm(), "memberPwConfirm");
+		checkEmpty(errors, member.getEmail(), "memberEmail");
+		checkEmpty(errors, member.getName(), "memberName");
+		checkEmpty(errors, member.getNickname(), "memberNickname");
+		checkEmpty(errors, member.getLoc(), "memberLoc");
+		//checkEmpty 메소드로 데이터가 비어있는 지 확인. 단, manager 데이터는 제외
+		
+		if(member.getPwConfirm() != null && !member.getPassword().equals(member.getPwConfirm())) {
+			errors.put("pwNotMatch", true);
+		}
+	}
+	
+	public void checkEmpty(Map<String, Boolean> errors, String value, String fieldName) {
+		
+		if(value == null || value.isEmpty()) {
+			errors.put(fieldName, true);
+		}
+	}
+	
+	
+	// ##내정보 보기
+	@GetMapping("/myHome")
+	public void myhome() {
+		
+	}
+	
+	
+	
 }
-		/*
-		 * member.id() -> 로그인 폼에서 받은 아이디
-		 * 
-		 * MemberVO a = service.get(member.id()); ->
-		 * 
-		 * member.getPassword() == a.password -> 같으면 로그인 성공!
-		 * 
-		 * --------> a을
-		 */

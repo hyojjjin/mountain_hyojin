@@ -1,4 +1,5 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="${root }/index.jsp">HOME</a>
@@ -35,22 +36,29 @@
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     
-    <ul>
-      <li class="nav-item">
-       <a class="nav-link" href="${root }/member/join">회원가입</a>
-      </li>
-      <li class="nav-item">
-       <a class="nav-link" href="${root }/member/login">로그인</a>
-      </li>
-      
-     <li class="nav-item">
-       <a class="nav-link" href="#">마이홈</a>
-     </li>
+    <c:if test="${empty sessionScope.authUser }">
+	    <ul>
+	      <li class="nav-item">
+	       <a class="nav-link" href="${root }/member/join">회원가입</a>
+	      </li>
+	      <li class="nav-item">
+	       <a class="nav-link" href="${root }/member/login">로그인</a>
+	      </li>
+	     </ul>
+     </c:if>
      
-     <li class="nav-item">
-       <a class="nav-link" href="#">로그아웃</a>
-     </li>
-    </ul>
+     
+    <c:if test="${not empty sessionScope.authUser }">
+	     <ul> 
+	    	 <li class="nav-item">
+	      		 <a class="nav-link" href="${root }/member/myhome">마이홈</a>
+	   		 </li>
+	     
+	   		 <li class="nav-item">
+	    		<a class="nav-link" href="${root }/member/logout">로그아웃</a>
+	    	 </li>
+	    </ul>
+    </c:if>
     
   </div>
 </nav>
