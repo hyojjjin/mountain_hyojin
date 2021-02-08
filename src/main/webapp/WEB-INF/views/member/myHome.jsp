@@ -2,6 +2,7 @@
   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="m" tagdir="/WEB-INF/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<m:topNav />
 
 <!--내 정보 보기 -->
 <form>
@@ -50,7 +51,7 @@
   <div class="form-group row">
     <label for="staticLoc" class="col-sm-2 col-form-label">주소</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticLoc" value="${sessionScope.authUser.loc }">
+      <input type="text" readonly class="form-control-plaintext" id="staticLoc" value="${authUser.loc }"> //얘는 왜 세션에서 안꺼내도 되는거지?
     </div>
   </div>
 
@@ -60,7 +61,7 @@
 
 
 
-	<a href="#">
+	<a href="${root }/member/myModify">
 		<button type="submit" class="btn btn-primary">회원 정보 수정</button>
 	</a>
 	

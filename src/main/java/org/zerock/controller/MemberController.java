@@ -130,8 +130,17 @@ public class MemberController {
 	
 	// ##내정보 보기
 	@GetMapping("/myHome")
-	public void myhome() {
-		
+	public String myhome() {
+		return "/member/myHome";
+		//redirect는 왜 안되지?
+		//왜 무한로프가 도는 거지?
+	}
+	
+	// ##내정보 수정
+	@GetMapping("/myModify")
+	public String myModify(MemberVO member) {
+		service.modify(member);
+		return "/member/myModify";
 	}
 	
 	
