@@ -1,7 +1,7 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="${root }">HOME</a>
+  <a class="navbar-brand" href="${root }/index.jsp">HOME</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -37,10 +37,10 @@
     
     <ul>
       <li class="nav-item">
-       <a class="nav-link" href="${root }/member/joinForm">회원가입</a>
+       <a class="nav-link" href="${root }/member/join">회원가입</a>
       </li>
       <li class="nav-item">
-       <a class="nav-link" href="${root }/member/loginForm">로그인</a>
+       <a class="nav-link" href="${root }/member/login">로그인</a>
       </li>
       
      <li class="nav-item">
