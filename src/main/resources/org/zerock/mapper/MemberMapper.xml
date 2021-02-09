@@ -38,11 +38,11 @@
 			password=#{password},
 			nickname=#{nickname},
 			loc=#{loc}
-		WHERE no = #{no}
+		WHERE id = #{id}
 	</update>
 	
 	<!--#회원 탈퇴(삭제) -->
 	<delete id="delete">
-		DELETE FROM member WHERE no = #{no}
+		DELETE FROM member WHERE id = #{id}
 	</delete>
 	</mapper>

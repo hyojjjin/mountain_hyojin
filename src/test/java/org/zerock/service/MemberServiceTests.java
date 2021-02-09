@@ -97,7 +97,7 @@ public class MemberServiceTests {
 	//회원 탈퇴(삭제)
 	@Test
 	public void testRemove() {
-		assertTrue(service.remove(32L));
+		assertTrue(service.remove("hi8"));
 	}
 	
 	

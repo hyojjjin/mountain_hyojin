@@ -98,7 +98,9 @@ public class MemberMapperTests {
 	public void testDelete() {
 		int before = mapper.getList().size();
 		
-		int cnt = mapper.delete(29L); //29번 삭제 테스트 완료 -> 29번 없음
+		int cnt = mapper.delete("hi8");
+		//29번 삭제 테스트 완료 -> 29번 없음
+		//받는 값(..?이 뭐였더라) 아이디로 바꾸고 테스트 완료
 		assertEquals(1, cnt);
 		
 		int after = mapper.getList().size();

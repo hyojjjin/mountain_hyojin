@@ -14,7 +14,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	private MemberMapper mapper;
 	
-	//회원 등록
+	//##회원 등록
 	@Override
 	public void register(MemberVO member) {
 		mapper.insertSelectKey(member);
@@ -42,7 +42,14 @@ public class MemberServiceImpl implements MemberService {
 
 	//회원 탈퇴(삭제)
 	@Override
-	public boolean remove(Long no) {
-		return mapper.delete(no) == 1;
+	public boolean remove(String id) {
+		return mapper.delete(id) == 1;
+	}
+	
+	
+	//회원 정보 체크
+	@Override
+	public boolean checkMember(String memA, String memB) {
+			return memA.equals(memB);
 	}
 }

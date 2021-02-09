@@ -11,6 +11,6 @@ public interface MemberMapper {
 	public MemberVO readMember(String id); //회원 정보 읽기 - 아이디
 	public MemberVO read(Long no); //회원 정보 읽기 - no
 	public int update(MemberVO member); //회원 정보 수정
-	public int delete(Long no); //회원 탈퇴(삭제)
+	public int delete(String id); //회원 탈퇴(삭제) - 아이디
 	
 }
