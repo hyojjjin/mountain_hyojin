@@ -24,10 +24,10 @@
 		$('#pwNull').hide();
 		
 		$("#loginButton").click(function() {
-			$('#idNull').hide();
+			$('#idNull').hide(); 
 			$('#pwNull').hide();
 			
-	//	e.preventDefault(); //submit 버튼의 기본 기능(submit) 을 막음!
+	//	e.preventDefault(); submit 버튼의 기본 기능(submit) 을 막음!
 		var inputId = $('#inputId').val();
 		var inputPw = $('#inputPw').val();
 			
