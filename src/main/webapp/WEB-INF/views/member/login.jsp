@@ -19,27 +19,46 @@
 
 <script>
 	$(document).ready(function() {
-            	$('#idNull').hide(); //일단 숨긴다.
-            	
+		
+		$('#idNull').hide();
+		$('#pwNull').hide();
+		
 		$("#loginButton").click(function() {
-            if ($('#inputId').val() != '') {
-            	
-            	if()//회원 중에 아이디가 있다면 숨긴다.
-            } else {
-                
-            }
-        });
-        
-        /* 이메일 값을 합쳐서 name으로 보내기 */
-        function setEmailInput() {
-        	var email = $("#email").val() + "@" + $("#textEmail").val();  
-        	$("#email-input").val(email);
-        }
-        
-        $("#select").change(setEmailInput);
-        $("#email").keyup(setEmailInput);
-        $("#textEmail").keyup(setEmailInput);
-        
+			$('#idNull').hide();
+			$('#pwNull').hide();
+			
+	//	e.preventDefault(); //submit 버튼의 기본 기능(submit) 을 막음!
+		var inputId = $('#inputId').val();
+		var inputPw = $('#inputPw').val();
+			
+		if (inputId == '') {
+			$('#idNull').show();
+		}
+		
+		if (inputPw == '') {
+			$('#pwNull').show();
+		}
+		
+		if (inputId == '' || inputPw == '') {
+			return;
+		} else {
+			$('#idNull').hide();
+			$('#pwNull').hide();
+		}
+		
+			$.ajax("/mountain/member/login", {
+				type: "post",
+				data: {inputId:inputId, inputPw:inputPw}
+			
+			}).fail(function() {
+				console.log("등록 실패");
+
+					 alert("아이디 또는 비밀번호를 확인해주세요.");
+				
+			}).done(function(data, status, xhr) {
+				console.log("등록 성공");
+			});
+		});  
     });
 </script>
 
@@ -49,40 +68,29 @@
 
 <m:topNav />
 
-<form method="post">
   <div class="form-group row">
     <label for="inputId" class="col-sm-2 col-form-label">아이디</label>
     <div class="col-sm-10">
       <input type="text" name="id" class="form-control" id="inputId" >
-    </div>
  	<span class="form-text" style="color: tomato" id="idNull" >
-      		아이디를 입력해주세요.
+ 			아이디를 입력해주세요.
     </span>
- 	<span class="form-text" style="color: tomato" id="idConfirm" >
-      		아이디를 확인해주세요.
-    </span>
-    
+    </div>
 
-    
-    
   </div>
-    <div class="form-group row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">비밀번호</label>
+  
+  <div class="form-group row">
+    <label for="inputPw" class="col-sm-2 col-form-label">비밀번호</label>
     <div class="col-sm-10">
-      <input type="password" name="password" class="form-control" id="inputPassword" >
+      <input type="password" name="password" class="form-control" id="inputPw" >
+   	  <span class="form-text" style="color: tomato" id="pwNull" >
+      		비밀번호를 입력해주세요.
+  	  </span>
     </div>
   </div>
   
-   	<span class="form-text" style="color: tomato" id="pwNull" >
-      		비밀번호를 입력해주세요.
-    </span>
- 	<span class="form-text" style="color: tomato" id="pwConfirm" >
-      		비밀번호를 확인해주세요.
-    </span>
+   <button class="btn btn-primary" id="loginButton" >로그인</button>
   
-   <button type="submit" class="btn btn-primary" id="loginButton" >로그인</button>
-  
-</form>
 
 </body>
 </html>

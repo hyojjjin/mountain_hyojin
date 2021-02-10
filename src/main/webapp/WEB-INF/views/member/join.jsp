@@ -23,7 +23,39 @@
 
 <!-- 이메일 주소 선택  -->
 <script>
-    $(function() {
+	$(document).ready(function() {
+		$('#idOk').hide();
+		$('#idDup').hide();
+		$("#idDupCheck").click(function(e) {
+			e.preventDefault();
+			var inputId = $('#inputId').val();
+			
+			$.ajax({
+				type: "get",
+				url: "/mountain/member/join/idDupCheck",
+				data: {inputId:inputId}
+			}).done(function(data) {
+				console.log("등록 성공");
+				if(data != null) {
+					if(data == '0' ) {
+						$('#idDup').hide();
+						alert("아이디를 사용할 수 있습니다.");
+						$('#idOk').show();
+					} else if(data == '-1') {
+						$('#idOk').hide();
+						alert("중복된 아이디입니다.");
+						$('#idDup').show();
+					} else if(data == '-2') {
+						$('#idNull').show(); //inputId가 빈 스트링일때 아이디를 적어주세요 멘트 어떻게 하냐!!!
+					}
+				} 
+			}).fail(function() {
+	
+			});
+		});
+		
+		
+    	//이메일 셀렉트 선택
         $('#select').change(function() {
             if ($('#select').val() == 'directly') {
                 $('#textEmail').attr("disabled", false);
@@ -55,17 +87,28 @@
 
 <form method="post">
   <div class="form-group row">
-    <label for="id" class="col-sm-2 col-form-label">아이디</label>
+    <label for="inputId" class="col-sm-2 col-form-label">아이디</label>
     <div class="col-sm-10">
-      <input type="text" name="id" class="form-control" id="id" value="">
+      <input type="text" name="id" class="form-control" id="inputId" >
       
       <c:if test="${errors.memberId }">
-      	<small class="form-text" style="color: tomato">
+      	<small class="form-text" style="color: tomato" id="idNull">
       		아이디를 입력해주세요.
       	</small>
       </c:if>
       
+      <small class="form-text" style="color: DodgerBlue" id="idOk" >
+      		사용 가능한 아이디입니다.
+  	  </small>
+      <small class="form-text" style="color: tomato" id="idDup" >
+      		중복된 아이디입니다.
+  	  </small>
+  	  
+      
+     <button class="btn btn-primary" id="idDupCheck" >아이디 중복 확인</button>
     </div>
+
+
   </div>
   <div class="form-group row">
     <label for="password" class="col-sm-2 col-form-label">비밀번호</label>

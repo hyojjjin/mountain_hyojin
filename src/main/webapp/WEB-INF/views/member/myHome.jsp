@@ -19,10 +19,29 @@
 <script>
 $(document).ready(function() {
 	
-		$('#errorPw').hide();
-
+	function hideSpans() {
+		$('#pwError').hide();
+		$('#pwNull').hide();	
+	}
+	
+	hideSpans();
+	
+	$("#memberDeleteCancel1").click(function() {
+		$('#pwConfirm').val('');
+		$('#pwError').hide();
+		$('#pwNull').hide();
+	});	
+	
+	$("#memberDeleteCancel2").click(function() {
+		$('#pwConfirm').val('');
+		$('#pwError').hide();
+		$('#pwNull').hide();
+	});	
+	
 	
 	$("#memberDelete").click(function() {
+		$('#pwError').hide();
+		$('#pwNull').hide();
 	//모달창을 띄우고 비밀번호 확인이 맞으면
 	//비밀번호 확인은 controller에서 함.	
 		var userId = $(this).attr("data-userId"); //attribute 값
@@ -37,16 +56,23 @@ $(document).ready(function() {
 			
 		}).fail(function() {
 			console.log("삭제 실패");
-			 //왜 삭제 실패로 나오지????
-			//	$('#errorPw').show();
-		//	 $('#memberDeleteModal').hide(); // 왜 마음대로야,,
-		//	 $('#memberDelete').attr("data-dismiss", modal); // 왜 마음대로야,,
+			if($('#pwConfirm').val() == '') { 
+				$('#pwNull').show();	//비밀번호를 입력해주세요.
+			} else {
+				$('#pwError').show();	//비밀번호가 일치하지 않습니다.
+			}
+
 		}).done(function() {
 			console.log("삭제 완료");
-			$('#errorPw').show(); // 왜 삭제 완료에서 뜨는거야?????!!
+		//	$('#errorPw').show(); // 왜 삭제 완료에서 뜨는거야?????!!
+		//=> fail, done은 페이지 상태 (404, 405, 200 등)에 따라서 구분됨
+		//	컨트롤러에서 페이지 상태를 받아야함. 리턴타입 : ResponseEntity<String>
+			$("#memberDeleteModal").modal('hide');
+			$("#memberDeleteSuccessModal").modal('show');
 			
 		});
 	});
+
 });
 </script>
 
@@ -121,26 +147,48 @@ $(document).ready(function() {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="ModalTitle">진심이세요?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span> //이건 모야? 아! x표시다!!
+        <button id="memberDeleteCancel1" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <label for="pwConfirm" class="col-form-label">비밀번호를 입력하세요.</label>
+            <label for="pwConfirm" class="col-form-label">비밀번호 확인</label>
             <input type="password" class="form-control" id="pwConfirm">
-          		<span class="form-text" style="color: tomato" id="errorPw" >
-      				비밀번호를 확인해주세요.
+          		<span class="form-text" style="color: tomato" id="pwError">
+      				비밀번호가 일치하지 않습니다.
+      			</span>
+      			<span class="form-text" style="color: tomato" id="pwNull">
+      				비밀번호를 입력해주세요.
       			</span>
           </div>
-          
-          //비밀번호 확인해야함
-          
           <div class="form-group">
       
-      -------------<br>
+
+	      
+	      
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="memberDeleteCancel2">취소</button>        
+        <button type="button" class="btn btn-primary" id="memberDelete" data-userId="${authUser.id }">탈퇴</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="memberDeleteSuccessModal" tabindex="-1" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalTitle">탈퇴하였습니다.</h5>
+      </div>
+      <div class="modal-body">
       	// ##탈퇴 이유 - 나중에 없애도됨!
          <br>
             <label for="message-text" class="col-form-label">탈퇴하는 이유가 무엇인가요?</label>
@@ -152,22 +200,16 @@ $(document).ready(function() {
 	            <option value="그냥그냥그냥3" id="go3">그냥그냥그냥3</option>
 	            <option value="directly" id="go4">직접 입력하기</option>
 	      </select>
-	      
-	      
-          </div>
-        </form>
+        
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-        //data-dismiss 모달 닫기 속성
-        
-        <button type="button" class="btn btn-primary" id="memberDelete" data-userId="${authUser.id }">탈퇴</button>
-        
+        <a href="${root }/index.jsp">
+        	<button type="button" class="btn btn-secondary">닫기</button>
+        </a>
       </div>
     </div>
   </div>
 </div>
-
 
 </body>
 </html>

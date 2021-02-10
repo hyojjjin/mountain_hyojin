@@ -6,11 +6,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.zerock.domain.MemberVO;
 import org.zerock.service.MemberService;
 
@@ -50,6 +53,26 @@ public class MemberController {
 		}
 		
 	}
+	// ##회원가입 - 아이디 중복 체크
+	@GetMapping("/join/idDupCheck")
+	@ResponseBody
+	public String idDupCheck(String inputId) {
+		
+		//아이디 값이 있으면
+		
+		if(inputId.equals("")) {
+			return "-2";
+		} else {
+			MemberVO member = service.getMember(inputId);
+			
+			if(member == null) {
+				return "0"; //회원이 없으면 0 리턴
+			} else {
+				return "-1"; //회원있으면 -1 리턴
+			}
+		}
+	}
+	
 	// ##로그인 성공 메시지
 	@GetMapping("/joinSuccess")
 	public void joinSuccess() {
@@ -60,35 +83,69 @@ public class MemberController {
 	public void login() {
 	}
 
-	// ##로그인 - POST
+	// ##로그인 test - POST
 	@PostMapping("/login")
-	public String login(MemberVO member, HttpSession session) {
+	@ResponseBody
+	public ResponseEntity<String> login(String inputId, String inputPw, HttpSession session) {
 		
-		MemberVO user = service.getMember(member.getId());
+		log.info(inputId);
+		log.info(inputPw);
 		
-			//사용자의 아이디를 가진 회원이 있다면
-			if(user != null && member.getPassword() != null) {
-				// member.getPassword(); 사용자가 적은 비밀번호
-				// loginMember.getPassword(); 아이디로 검색해서 꺼낸 회원의 비밀번호
-				
-				boolean checkMemberPw = service.checkMember(member.getPassword(), user.getPassword());
-				//비밀번호 확인
-				
-				if(checkMemberPw) {
-					session.setAttribute("authUser", user);
-					//세션에 정보 담기
-					
-			//RedirectAttributes rttr;
-			//		rttr.addAttribute("authUser", user);
+		MemberVO user = service.getMember(inputId);
+		
+		//사용자의 아이디를 가진 회원이 있다면
+		if(user != null && inputPw != null) {
+			// member.getPassword(); 사용자가 적은 비밀번호
+			// loginMember.getPassword(); 아이디로 검색해서 꺼낸 회원의 비밀번호
 			
-			//		HttpServletRequest req
-			//	req.getSession().setAttribute("authUser", user);
-					
-					return "redirect:/index.jsp";
-				}
+			boolean checkMemberPw = service.checkMember(inputPw, user.getPassword());
+			//비밀번호 확인
+			
+			if(checkMemberPw) {
+				session.setAttribute("authUser", user);
+				//세션에 정보 담기
+				
+				//RedirectAttributes rttr;
+				//		rttr.addAttribute("authUser", user);
+				
+				//		HttpServletRequest req
+				//	req.getSession().setAttribute("authUser", user);
+				
+				
+				
 			}
-			return "";
-	}
+				return new ResponseEntity<> ("success", HttpStatus.OK);
+			} else {
+				return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);		
+			}
+		}
+
+	
+	/*
+	 * // ##로그인 - POST
+	 * 
+	 * @PostMapping("/login") public String login(String inputId, String inputPw,
+	 * HttpSession session) {
+	 * 
+	 * log.info(inputId); log.info(inputPw);
+	 * 
+	 * MemberVO user = service.getMember(inputId);
+	 * 
+	 * //사용자의 아이디를 가진 회원이 있다면 if(user != null && inputPw != null) { //
+	 * member.getPassword(); 사용자가 적은 비밀번호 // loginMember.getPassword(); 아이디로 검색해서 꺼낸
+	 * 회원의 비밀번호
+	 * 
+	 * boolean checkMemberPw = service.checkMember(inputPw, user.getPassword());
+	 * //비밀번호 확인
+	 * 
+	 * if(checkMemberPw) { session.setAttribute("authUser", user); //세션에 정보 담기
+	 * 
+	 * //RedirectAttributes rttr; // rttr.addAttribute("authUser", user);
+	 * 
+	 * // HttpServletRequest req // req.getSession().setAttribute("authUser", user);
+	 * 
+	 * return "redirect:/index.jsp"; } } return ""; }
+	 */
 	
 	
 	// ##로그아웃 
@@ -192,7 +249,8 @@ public class MemberController {
 	
 	
 	@DeleteMapping("/delete")
-	public String delete(String userId, String pwConfirm, HttpSession session) {
+	@ResponseBody
+	public ResponseEntity<String> delete(String userId, String pwConfirm, HttpSession session) {
 		//회원 삭제..
 		log.info(userId);
 		log.info(pwConfirm);
@@ -217,10 +275,10 @@ public class MemberController {
 				session.invalidate();
 			}
 			
-			return "redirect:/index.jsp";
+			return new ResponseEntity<> ("success", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);		
 		}
-		return "/member/myHome";
-		
 	}
 	
 	
