@@ -63,7 +63,27 @@ public class MemberController {
 		if(inputId.equals("")) {
 			return "-2";
 		} else {
-			MemberVO member = service.getMember(inputId);
+			MemberVO member = service.getMemberId(inputId);
+			
+			if(member == null) {
+				return "0"; //회원이 없으면 0 리턴
+			} else {
+				return "-1"; //회원있으면 -1 리턴
+			}
+		}
+	}
+	
+	// ##회원가입 - 닉네임 중복 체크
+	@GetMapping("/join/nicknameDupCheck")
+	@ResponseBody
+	public String nicknameDupCheck(String inputNickname) {
+		
+		//닉네임 값이 있으면
+		
+		if(inputNickname.equals("")) {
+			return "-2";
+		} else {
+			MemberVO member = service.getMemberNn(inputNickname);
 			
 			if(member == null) {
 				return "0"; //회원이 없으면 0 리턴
@@ -91,7 +111,7 @@ public class MemberController {
 		log.info(inputId);
 		log.info(inputPw);
 		
-		MemberVO user = service.getMember(inputId);
+		MemberVO user = service.getMemberId(inputId);
 		
 		//사용자의 아이디를 가진 회원이 있다면
 		if(user != null && inputPw != null) {
@@ -214,7 +234,7 @@ public class MemberController {
 		log.info(user);
 		log.info(service);
 		log.info(member);
-		MemberVO userMember = service.getMember(user.getId());
+		MemberVO userMember = service.getMemberId(user.getId());
 		
 		boolean checkMember = service.checkMember(userMember.getId(), member.getId());
 		//같은 아이디인지 확인
@@ -265,7 +285,7 @@ public class MemberController {
 		//ajax로 모달창에 비밀번호가 다르다는 메시지 노출
 		//=>이거슨 어떠케해???
 		
-		MemberVO userMember = service.getMember(userId);
+		MemberVO userMember = service.getMemberId(userId);
 		
 		if(userMember.getPassword().equals(pwConfirm)) {
 			service.remove(userId);
