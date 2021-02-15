@@ -285,7 +285,6 @@ public class MemberController {
 		log.info(pwConfirm);
 		log.info("회원탈퇴 모달");
 		
-		
 		MemberVO userMember = service.getMemberId(userId);
 		
 		if(userMember.getPassword().equals(pwConfirm)) {
@@ -301,8 +300,6 @@ public class MemberController {
 			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);		
 		}
 	}
-	
-	
 
 	
 }

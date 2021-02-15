@@ -37,8 +37,7 @@
 		$("#idDupCheck").click(function(e) {
 			e.preventDefault();
 			var inputId = $('#inputId').val();
-			
-			
+						
 			$.ajax({
 				type: "get",
 				url: "/mountain/member/join/idDupCheck",

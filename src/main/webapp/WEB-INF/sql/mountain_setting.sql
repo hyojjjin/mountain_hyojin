@@ -239,4 +239,3 @@ CREATE TABLE CONQUEST (
   mountain_no NUMBER NOT NULL,
   condate DATE DEFAULT sysdate NOT NULL
 );
-
