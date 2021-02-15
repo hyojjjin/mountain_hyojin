@@ -59,11 +59,32 @@ public class MemberController {
 	public String idDupCheck(String inputId) {
 		
 		//아이디 값이 있으면
+		log.info(inputId);
 		
 		if(inputId.equals("")) {
 			return "-2";
 		} else {
-			MemberVO member = service.getMember(inputId);
+			MemberVO member = service.getMemberId(inputId);
+			
+			if(member == null) {
+				return "0"; //회원이 없으면 0 리턴
+			} else {
+				return "-1"; //회원있으면 -1 리턴
+			}
+		}
+	}
+	
+	// ##회원가입 - 닉네임 중복 체크
+	@GetMapping("/join/nicknameDupCheck")
+	@ResponseBody
+	public String nicknameDupCheck(String inputNickname) {
+		
+		//닉네임 값이 있으면
+		
+		if(inputNickname.equals("")) {
+			return "-2";
+		} else {
+			MemberVO member = service.getMemberNn(inputNickname);
 			
 			if(member == null) {
 				return "0"; //회원이 없으면 0 리턴
@@ -83,7 +104,7 @@ public class MemberController {
 	public void login() {
 	}
 
-	// ##로그인 test - POST
+	// ##로그인 - POST
 	@PostMapping("/login")
 	@ResponseBody
 	public ResponseEntity<String> login(String inputId, String inputPw, HttpSession session) {
@@ -91,7 +112,7 @@ public class MemberController {
 		log.info(inputId);
 		log.info(inputPw);
 		
-		MemberVO user = service.getMember(inputId);
+		MemberVO user = service.getMemberId(inputId);
 		
 		//사용자의 아이디를 가진 회원이 있다면
 		if(user != null && inputPw != null) {
@@ -214,7 +235,7 @@ public class MemberController {
 		log.info(user);
 		log.info(service);
 		log.info(member);
-		MemberVO userMember = service.getMember(user.getId());
+		MemberVO userMember = service.getMemberId(user.getId());
 		
 		boolean checkMember = service.checkMember(userMember.getId(), member.getId());
 		//같은 아이디인지 확인
@@ -228,7 +249,6 @@ public class MemberController {
 			//수정된 멤버 정보를 세션에 저장
 			
 			return "/member/myHome";
-			
 		
 		}
 	
@@ -237,35 +257,36 @@ public class MemberController {
 		
 	}
 	
-	/*
-	 * // ##내 정보 수정
-	 * 
-	 * @GetMapping("/myModify") public String myModify(MemberVO member) {
-	 * service.modify(member); return "/member/myHome"; }
-	 */
+	// ##이메일 부분 나누기
+	public void emailDivide(String email) {
+		
+		String emailDiv[] = email.split("@");
+		String emailFront = null;
+		String emailSelect = null;
+		
+		if(emailDiv != null && emailDiv.length >= 2) {
+			emailFront = emailDiv[0];
+			emailSelect = emailDiv[1];
+		}
+		
+		log.info(emailFront);
+		log.info(emailSelect);
+		
+		//세션에 담아서 보내주기
+		//언제?? 언제 보내줘??
+		
+	}
 	
-	// ##내 정보 수정 - GET, void(경로로 바로 이동)
-	
-	
-	
+	// ##회원 삭제
 	@DeleteMapping("/delete")
 	@ResponseBody
 	public ResponseEntity<String> delete(String userId, String pwConfirm, HttpSession session) {
-		//회원 삭제..
 		log.info(userId);
 		log.info(pwConfirm);
 		log.info("회원탈퇴 모달");
 		
-		//userId를 이용해서 디비에서 데이터를 겟해준다.
-		//가져온 데이터의 pw 값과 pwConfirm으로 받은 값을 비교 (스트링이니까 equals로 비교)
-		//pw가 같으면?
-		//회원 삭제 실행
 		
-		//pw가 다르면
-		//ajax로 모달창에 비밀번호가 다르다는 메시지 노출
-		//=>이거슨 어떠케해???
-		
-		MemberVO userMember = service.getMember(userId);
+		MemberVO userMember = service.getMemberId(userId);
 		
 		if(userMember.getPassword().equals(pwConfirm)) {
 			service.remove(userId);

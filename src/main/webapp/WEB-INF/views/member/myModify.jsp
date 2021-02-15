@@ -17,32 +17,6 @@
   src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
-<!-- 이메일 주소 선택  -->
-<!-- <script>
-    $(function() {
-        $('#select').change(function() {
-            if ($('#select').val() == 'directly') {
-                $('#textEmail').attr("disabled", false);
-                $('#textEmail').val("");
-                $('#textEmail').focus();
-            } else {
-                $('#textEmail').val($('#select').val());
-            }
-        });
-        
-        /* 이메일 값을 합쳐서 name으로 보내기 */
-        function setEmailInput() {
-        	var email = $("#email").val() + "@" + $("#textEmail").val();  
-        	$("#email-input").val(email);
-        }
-        
-        $("#select").change(setEmailInput);
-        $("#email").keyup(setEmailInput);
-        $("#textEmail").keyup(setEmailInput);
-        
-    });
-</script> -->
-
 
 <title>Insert title here</title>
 </head>

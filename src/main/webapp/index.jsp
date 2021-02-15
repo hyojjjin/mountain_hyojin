@@ -23,7 +23,9 @@
 </head>
 <body>
 <m:topNav />
-로그인 된 아이디 : ${authUser.id }
+로그인 된 아이디 : ${authUser.id } <br>
+로그인 된 NO : ${authUser.no }
+
 
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">

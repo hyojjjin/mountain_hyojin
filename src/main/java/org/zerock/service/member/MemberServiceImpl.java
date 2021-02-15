@@ -22,8 +22,14 @@ public class MemberServiceImpl implements MemberService {
 	
 	//회원 정보 읽기 - 아이디
 	@Override
-	public MemberVO getMember(String id) {
-		return mapper.readMember(id);
+	public MemberVO getMemberId(String id) {
+		return mapper.readMemberId(id);
+	}
+
+	//회원 정보 읽기 - 닉네임
+	@Override
+	public MemberVO getMemberNn(String nn) {
+		return mapper.readMemberNn(nn);
 	}
 	
 	//회원 정보 읽기 - no

@@ -50,8 +50,15 @@ public class MemberMapperTests {
 	
 	//회원 정보 읽기 - 아이디
 	@Test
-	public void testReadMember() {
-		MemberVO member = mapper.readMember("hi");
+	public void testReadMemberId() {
+		MemberVO member = mapper.readMemberId("hi");
+		log.info(member);
+	}
+	
+	//회원 정보 읽기 - 닉네임
+	@Test
+	public void testReadMemberNn() {
+		MemberVO member = mapper.readMemberNn("1");
 		log.info(member);
 	}
 	

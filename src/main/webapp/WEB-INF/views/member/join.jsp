@@ -21,14 +21,23 @@
 //string email = email.concat(email, select);
 </script>
 
-<!-- 이메일 주소 선택  -->
+
 <script>
 	$(document).ready(function() {
+	
+		// ##아이디 중복 멘트 - hide
 		$('#idOk').hide();
 		$('#idDup').hide();
+		
+		// ##닉네임 중복 멘트 - hide
+		$('#nicknameOk').hide();
+		$('#nicknameDup').hide();
+		
+		// ##아이디 중복 검사
 		$("#idDupCheck").click(function(e) {
 			e.preventDefault();
 			var inputId = $('#inputId').val();
+			
 			
 			$.ajax({
 				type: "get",
@@ -40,6 +49,7 @@
 					if(data == '0' ) {
 						$('#idDup').hide();
 						alert("아이디를 사용할 수 있습니다.");
+						$("#checkedId").val('y');
 						$('#idOk').show();
 					} else if(data == '-1') {
 						$('#idOk').hide();
@@ -54,8 +64,63 @@
 			});
 		});
 		
+		//아이디 중복 검사를 해주세요.
+		$("#join").click(function(e) {
+			e.preventDefault();
+			if($("#checkedId").val() == ''){
+				alert("아이디 중복 확인을 해주세요.");
+				/* $("input[name='checked_id']").eq(0).focus(); */
+				return false;
+				
+			}
+		});
 		
-    	//이메일 셀렉트 선택
+		
+		
+		// ##닉네임 중복 검사
+		$("#nicknameDupCheck").click(function(e) {
+			e.preventDefault();
+			var inputNickname = $('#inputNickname').val();
+			
+			$.ajax({
+				type: "get",
+				url: "/mountain/member/join/nicknameDupCheck",
+				data: {inputNickname:inputNickname}
+			}).done(function(data) {
+				console.log("등록 성공");
+				if(data != null) {
+					if(data == '0' ) {
+						$('#nicknameDup').hide();
+						alert("닉네임을 사용할 수 있습니다.");
+						$("#checkedNn").val('y');
+						$('#nicknameOk').show();
+					} else if(data == '-1') {
+						$('#nicknameOk').hide();
+						alert("중복된 닉네임입니다.");
+						$('#nicknameDup').show();
+					} else if(data == '-2') {
+						$('#nicknameNull').show(); //inputId가 빈 스트링일때 아이디를 적어주세요 멘트 어떻게 하냐!!!
+					}
+				} 
+			}).fail(function() {
+	
+			});
+		});
+		
+		
+		//닉네임 중복 검사를 해주세요.
+		$("#join").click(function(e) {
+			e.preventDefault();
+			if($("#checkedNn").val() == ''){
+				alert("닉네임 중복 확인을 해주세요.");
+				/* $("input[name='checked_id']").eq(0).focus(); */
+				return false;
+				
+			}
+		});
+		
+		//<!-- 이메일 주소 선택  -->
+    	// ##이메일 셀렉트 선택
         $('#select').change(function() {
             if ($('#select').val() == 'directly') {
                 $('#textEmail').attr("disabled", false);
@@ -76,6 +141,18 @@
         $("#email").keyup(setEmailInput);
         $("#textEmail").keyup(setEmailInput);
         
+        /* 주소 값을 합쳐서 name으로 보내기 */
+        function setLocInput() {
+        	var loc = $("#sample3_postcode").val() + "|" + $("#sample3_address").val() + $("#sample3_detailAddress").val() + " " +
+        	$("#sample3_detailAddress").val() + $("#sample3_extraAddress").val();
+        	$("#loc-input").val(loc);
+        }
+  
+        $("#sample3_postcode").change(setLocInput);
+        $("#sample3_address").change(setLocInput);
+        $("#sample3_detailAddress").keyup(setLocInput);
+        $("#sample3_extraAddress").change(setLocInput);
+        
     });
 </script>
 
@@ -89,8 +166,10 @@
   <div class="form-group row">
     <label for="inputId" class="col-sm-2 col-form-label">아이디</label>
     <div class="col-sm-10">
-      <input type="text" name="id" class="form-control" id="inputId" >
-      
+      <input type="text" name="id" class="form-control" id="inputId" pattern="[a-z0-9]{4,20}">
+      <small class="form-text" style="color: gray" id="idPattern">
+      숫자 또는 영문 소문자를 이용하여 입력하세요. (4~20글자)
+      </small>
       <c:if test="${errors.memberId }">
       	<small class="form-text" style="color: tomato" id="idNull">
       		아이디를 입력해주세요.
@@ -106,6 +185,7 @@
   	  
       
      <button class="btn btn-primary" id="idDupCheck" >아이디 중복 확인</button>
+     <input type="hidden" id="checkedId" value="">
     </div>
 
 
@@ -113,8 +193,10 @@
   <div class="form-group row">
     <label for="password" class="col-sm-2 col-form-label">비밀번호</label>
     <div class="col-sm-10">
-      <input type="password" name="password" class="form-control" id="password">
-      
+      <input type="password" name="password" class="form-control" id="password" pattern="(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}">
+      <small class="form-text" style="color: gray" id="pwPattern">
+      영문 대소문자, 숫자, 특수문자를 각 1개 이상 사용하여 입력하세요. (8글자 이상)
+      </small>
       <c:if test="${errors.memberPw }">
       	<small class="form-text" style="color: tomato">
       		비밀번호를 입력해주세요.
@@ -151,8 +233,8 @@
      
 <!--    <input type="text" name="email" class="form-control" id="email"> -->
  	
- 	<div>
-        <input type="text" id="email" value="" placeholder="이메일 입력"> 
+ 	
+        <input type="text" id="email" value="" placeholder="이메일 입력" pattern="[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}"> 
  		<span>@</span>
 		 <input id="textEmail" placeholder="이메일을 선택하세요."> 
  		<select id="select">
@@ -164,23 +246,29 @@
 	            <option value="directly" id="textEmail">직접 입력하기</option>
 	        </select>
 	    <input type="hidden" name="email" id="email-input" />
-	</div>
+	          <small class="form-text" style="color: gray" id="emailPattern">
+      이메일 형식에 맞게 입력하세요.(하지만 ,, 왜 안대는걸까)
+      </small>
+	    
+	
 
       <c:if test="${errors.memberEmail }">
       	<small class="form-text" style="color: tomato">
       		이메일을 입력해주세요.
       	</small>
       </c:if>
-      
-      </div>
+     
     </div>
   </div>
   
   <div class="form-group row">
     <label for="name" class="col-sm-2 col-form-label">이름</label>
     <div class="col-sm-10">
-      <input type="text" name="name" class="form-control" id="name">
-      
+      <input type="text" name="name" class="form-control" id="name" pattern="[가-힣a-z]{1,20}">
+      <small class="form-text" style="color: gray" id="namePattern">
+      한글 또는 영어 소문자로 입력하세요.
+      </small>
+	    
       <c:if test="${errors.memberName }">
       	<small class="form-text" style="color: tomato">
       		이름을 입력해주세요.
@@ -192,9 +280,12 @@
   
   
   <div class="form-group row">
-    <label for="nickname" class="col-sm-2 col-form-label">닉네임</label>
+    <label for="inputNickname" class="col-sm-2 col-form-label">닉네임</label>
     <div class="col-sm-10">
-      <input type="text" name="nickname" class="form-control" id="nickname">
+      <input type="text" name="nickname" class="form-control" id="inputNickname" pattern="[가-힣a-z]{1,20}">
+      <small class="form-text" style="color: gray" id="nnPattern">
+      한글 또는 영어 소문자로 입력하세요.
+      </small>
       
       <c:if test="${errors.memberNickname }">
       	<small class="form-text" style="color: tomato">
@@ -202,29 +293,127 @@
       	</small>
       </c:if>
       
+      <small class="form-text" style="color: DodgerBlue" id="nicknameOk" >
+      		사용 가능한 닉네임입니다.
+  	  </small>
+      <small class="form-text" style="color: tomato" id="nicknameDup" >
+      		중복된 닉네임입니다.
+  	  </small>
+     <button class="btn btn-primary" id="nicknameDupCheck" >닉네임 중복 확인</button>
+      <input type="hidden" id="checkedNn" value="">
     </div>
   </div>
+  
   
   <div class="form-group row">
   
     <label for="loc" class="col-sm-2 col-form-label">주소</label>
     <div class="col-sm-10">
-      <input type="text" name="loc" class="form-control" id="loc">
-	//주소api 어떻게 받아오는 거지?
+    <input type="hidden" name="loc" id="loc-input">
+	
 		
+		<!-- //주소 api input 태그	 -->	 
+		<br> 
+		<input type="text" id="sample3_postcode" placeholder="우편번호">
+		<input type="button" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
+		<input type="text" id="sample3_address" placeholder="주소"><br>
+		<input type="text" id="sample3_detailAddress" placeholder="상세주소" value="">
+		<input type="text" id="sample3_extraAddress" placeholder="참고항목">
       <c:if test="${errors.memberLoc }">
       	<small class="form-text" style="color: tomato">
       		주소를 입력해주세요.
       	</small>
       </c:if>
-      
+      <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+</div>
     </div>
   </div>
-  
 
-  <button type="submit" class="btn btn-primary">회원 가입</button>
+
+  <button type="submit" class="btn btn-primary" id="join">회원 가입</button>
   
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+//우편번호 찾기 찾기 화면을 넣을 element
+var element_wrap = document.getElementById('wrap');
+
+function foldDaumPostcode() {
+    // iframe을 넣은 element를 안보이게 한다.
+    element_wrap.style.display = 'none';
+}
+
+function sample3_execDaumPostcode() {
+    // 현재 scroll 위치를 저장해놓는다.
+    var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if(data.userSelectedType === 'R'){
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraAddr !== ''){
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                // 조합된 참고항목을 해당 필드에 넣는다.
+                document.getElementById("sample3_extraAddress").value = extraAddr;
+            
+            } else {
+                document.getElementById("sample3_extraAddress").value = '';
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('sample3_postcode').value = data.zonecode;
+            document.getElementById("sample3_address").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            document.getElementById("sample3_detailAddress").focus();
+
+            // iframe을 넣은 element를 안보이게 한다.
+            // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+            element_wrap.style.display = 'none';
+
+            // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+            document.body.scrollTop = currentScroll;
+        },
+        // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+        onresize : function(size) {
+            element_wrap.style.height = size.height+'px';
+        },
+        width : '100%',
+        height : '100%'
+    }).embed(element_wrap);
+
+    // iframe을 넣은 element를 보이게 한다.
+    element_wrap.style.display = 'block';
+}
+</script>
+
 </form>
+
+
+
 
 </body>
 </html>

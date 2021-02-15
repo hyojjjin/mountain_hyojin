@@ -57,6 +57,8 @@
 				
 			}).done(function(data, status, xhr) {
 				console.log("등록 성공");
+				window.location.href="/mountain/index.jsp";				
+		
 			});
 		});  
     });
@@ -72,9 +74,9 @@
     <label for="inputId" class="col-sm-2 col-form-label">아이디</label>
     <div class="col-sm-10">
       <input type="text" name="id" class="form-control" id="inputId" >
- 	<span class="form-text" style="color: tomato" id="idNull" >
+ 	<small class="form-text" style="color: tomato" id="idNull" >
  			아이디를 입력해주세요.
-    </span>
+    </small>
     </div>
 
   </div>
@@ -83,9 +85,9 @@
     <label for="inputPw" class="col-sm-2 col-form-label">비밀번호</label>
     <div class="col-sm-10">
       <input type="password" name="password" class="form-control" id="inputPw" >
-   	  <span class="form-text" style="color: tomato" id="pwNull" >
+   	  <small class="form-text" style="color: tomato" id="pwNull" >
       		비밀번호를 입력해주세요.
-  	  </span>
+  	  </small>
     </div>
   </div>
   
