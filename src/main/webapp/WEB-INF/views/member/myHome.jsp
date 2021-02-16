@@ -72,7 +72,6 @@ $(document).ready(function() {
 			
 		});
 	});
-
 });
 </script>
 
@@ -109,12 +108,17 @@ $(document).ready(function() {
       <input type="text" readonly class="form-control-plaintext" id="staticNickname" value="${sessionScope.authUser.nickname }">
     </div>
   </div>
+  
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="${sessionScope.authUser.email }">
+      <input type="text" readonly id="emailFront" value="${emailDTO.emailFront }" > 
+ 	  <span>@</span>
+	  <input type="text" readonly id="emailSelect" value="${emailDTO.emailSelect }" > 
     </div>
   </div>
+  
+  
   <div class="form-group row">
     <label for="staticLoc" class="col-sm-2 col-form-label">주소</label>
     <div class="col-sm-10">
@@ -124,11 +128,24 @@ $(document).ready(function() {
 
 </form>
 
-<h3>산킷리스트</h3>
+<form method="post" action="/mountain/wish/register.do">
+	<h3>산킷리스트 삽입 예정</h3>
+	<div class="card">
+		<a href="${root }/wish/list">
+			<span class="card-body">산킷리스트 ${wishCount }</span>
+		</a>
+	</div>
+		//찜등록해보깅
+		//되다가 왜 안대는거야??????
+		<input type="hidden" name="member_no" value="222">
+		<input type="hidden" name="mountain_no" value="17">
+		<button type="submit" class="btn btn-primary">찜 등록</button>
+</form>
+
 
 
 	<!-- ##수정 버튼 -->
-	<a href="${root }/member/myModify">
+	<a href="/mountain/member/myModify">
 		<button type="submit" class="btn btn-primary">회원 정보 수정</button>
 	</a>
 	
@@ -139,7 +156,6 @@ $(document).ready(function() {
 	
 <!-- ##탈퇴 버튼 - 모달 -->
 <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#memberDeleteModal" data-whatever="@mdo">회원 탈퇴 모달</button>
-//#은 아래 모달창을 참조한다는 것!
 //@는 뭐지?
 
 <div class="modal fade" id="memberDeleteModal" tabindex="-1" aria-labelledby="memberDeleteModal" aria-hidden="true">

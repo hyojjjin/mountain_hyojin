@@ -34,4 +34,11 @@
 	<delete id="delete">
 		DELETE FROM wish WHERE member_no = #{member_no} AND mountain_no = #{mountain_no} 
 	</delete>
+	
+	<!--#찜 개수 -->
+	<select id="wishSize" resultType="int">
+		SELECT count(*) FROM wish WHERE member_no = #{member_no} 
+	</select>
+	
+	
 	</mapper>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.zerock.domain.member.MEmailDTO;
 import org.zerock.domain.member.MemberVO;
 import org.zerock.service.member.MemberService;
 
@@ -36,15 +37,22 @@ public class MemberController {
 
 	// ##회원가입 - POST
 	@PostMapping("/join")
-	public String register(MemberVO member, HttpServletRequest req) {
+	public String register(MemberVO member, HttpServletRequest req, HttpSession session) {
 		
 		Map<String, Boolean> errors = new HashMap<String, Boolean>();
 		req.setAttribute("errors", errors);
 		validate(errors, member);
 		
+		//이메일 정보 쪼개기 - 세션에 담기 
+		MEmailDTO emailDTO = new MEmailDTO();
+		emailDTO.emailSplit(member.getEmail());
+		session.setAttribute("emailDTO", emailDTO);
+		
+		
 		if (errors.isEmpty()) {
 			service.register(member);
 			// 서비스에 일을 시키고
+			log.info(member);
 			return "redirect:joinSuccess";
 			
 
@@ -119,19 +127,14 @@ public class MemberController {
 			// member.getPassword(); 사용자가 적은 비밀번호
 			// loginMember.getPassword(); 아이디로 검색해서 꺼낸 회원의 비밀번호
 			
-			boolean checkMemberPw = service.checkMember(inputPw, user.getPassword());
-			//비밀번호 확인
+			boolean checkMemberPw =
+					service.checkMember(inputPw, user.getPassword());
+			
 			
 			if(checkMemberPw) {
 				session.setAttribute("authUser", user);
 				//세션에 정보 담기
-				
-				//RedirectAttributes rttr;
-				//		rttr.addAttribute("authUser", user);
-				
-				//		HttpServletRequest req
-				//	req.getSession().setAttribute("authUser", user);
-				
+							
 				
 				
 			}
@@ -140,33 +143,6 @@ public class MemberController {
 				return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);		
 			}
 		}
-
-	
-	/*
-	 * // ##로그인 - POST
-	 * 
-	 * @PostMapping("/login") public String login(String inputId, String inputPw,
-	 * HttpSession session) {
-	 * 
-	 * log.info(inputId); log.info(inputPw);
-	 * 
-	 * MemberVO user = service.getMember(inputId);
-	 * 
-	 * //사용자의 아이디를 가진 회원이 있다면 if(user != null && inputPw != null) { //
-	 * member.getPassword(); 사용자가 적은 비밀번호 // loginMember.getPassword(); 아이디로 검색해서 꺼낸
-	 * 회원의 비밀번호
-	 * 
-	 * boolean checkMemberPw = service.checkMember(inputPw, user.getPassword());
-	 * //비밀번호 확인
-	 * 
-	 * if(checkMemberPw) { session.setAttribute("authUser", user); //세션에 정보 담기
-	 * 
-	 * //RedirectAttributes rttr; // rttr.addAttribute("authUser", user);
-	 * 
-	 * // HttpServletRequest req // req.getSession().setAttribute("authUser", user);
-	 * 
-	 * return "redirect:/index.jsp"; } } return ""; }
-	 */
 	
 	
 	// ##로그아웃 
@@ -211,6 +187,7 @@ public class MemberController {
 	// ##내 정보 보기
 	@GetMapping("/myHome")
 	public String myHome() {
+			
 		return "/member/myHome";
 		
 	//	return "redirect:member/myHome";
@@ -248,6 +225,11 @@ public class MemberController {
 			session.setAttribute("authUser", member);
 			//수정된 멤버 정보를 세션에 저장
 			
+			MEmailDTO emailDTO = new MEmailDTO();
+			emailDTO.emailSplit(member.getEmail());
+			session.setAttribute("emailDTO", emailDTO);
+			//수정된 이메일 정보를 세션에 저장
+			
 			return "/member/myHome";
 		
 		}
@@ -256,26 +238,8 @@ public class MemberController {
 		//오류 표시 해야함. 또는 홈으로 이동?? 어떻게 할까 모달창이 떠야하나?
 		
 	}
+	 
 	
-	// ##이메일 부분 나누기
-	public void emailDivide(String email) {
-		
-		String emailDiv[] = email.split("@");
-		String emailFront = null;
-		String emailSelect = null;
-		
-		if(emailDiv != null && emailDiv.length >= 2) {
-			emailFront = emailDiv[0];
-			emailSelect = emailDiv[1];
-		}
-		
-		log.info(emailFront);
-		log.info(emailSelect);
-		
-		//세션에 담아서 보내주기
-		//언제?? 언제 보내줘??
-		
-	}
 	
 	// ##회원 삭제
 	@DeleteMapping("/delete")
