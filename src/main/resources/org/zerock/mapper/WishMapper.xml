@@ -12,32 +12,44 @@
 		
 		INSERT INTO wish 
 		(no, member_no, mountain_no)
-		VALUES (#{no}, #{member_no}, #{mountain_no}) 
+		VALUES (#{no}, #{memberNo}, #{mountainNo}) 
 	</insert>
 	
 	<!--#전체 찜 리스트  -->
 	<select id="getList" resultType="org.zerock.domain.wish.WishVO">
-		SELECT * FROM wish
+		SELECT 
+			no,
+			member_no as memberNo,
+			mountain_no as mountainNo
+		FROM wish
 	</select>
 	
 	<!--#찜 리스트 - 산 -->
 	<select id="readWishMt" resultType="org.zerock.domain.wish.WishVO">
-		SELECT * FROM wish WHERE mountain_no = #{mountain_no}
+		SELECT
+			no,
+			member_no as memberNo,
+			mountain_no as mountainNo
+		FROM wish WHERE mountain_no = #{mountainNo}
 	</select>
 
 	<!--#찜 리스트 - 회원 -->
 	<select id="readWishMem" resultType="org.zerock.domain.wish.WishVO">
-		SELECT * FROM wish WHERE member_no = #{member_no}
+		SELECT
+			no,
+			member_no as memberNo,
+			mountain_no as mountainNo
+		FROM wish WHERE member_no = #{memberNo}
 	</select>
 	
 	<!--#찜 삭제 -->
 	<delete id="delete">
-		DELETE FROM wish WHERE member_no = #{member_no} AND mountain_no = #{mountain_no} 
+		DELETE FROM wish WHERE member_no = #{membeNo} AND mountain_no = #{mountainNo} 
 	</delete>
 	
 	<!--#찜 개수 -->
 	<select id="wishSize" resultType="int">
-		SELECT count(*) FROM wish WHERE member_no = #{member_no} 
+		SELECT count(*) FROM wish WHERE member_no = #{memberNo} 
 	</select>
 	
 	

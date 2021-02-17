@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.member.MEmailDTO;
 import org.zerock.domain.member.MemberVO;
 import org.zerock.service.member.MemberService;
@@ -37,17 +38,11 @@ public class MemberController {
 
 	// ##회원가입 - POST
 	@PostMapping("/join")
-	public String register(MemberVO member, HttpServletRequest req, HttpSession session) {
+	public String register(MemberVO member, HttpServletRequest req) {
 		
 		Map<String, Boolean> errors = new HashMap<String, Boolean>();
 		req.setAttribute("errors", errors);
 		validate(errors, member);
-		
-		//이메일 정보 쪼개기 - 세션에 담기 
-		MEmailDTO emailDTO = new MEmailDTO();
-		emailDTO.emailSplit(member.getEmail());
-		session.setAttribute("emailDTO", emailDTO);
-		
 		
 		if (errors.isEmpty()) {
 			service.register(member);
@@ -109,7 +104,15 @@ public class MemberController {
 
 	// ##로그인 - GET
 	@GetMapping("/login")
-	public void login() {
+	public String login(HttpSession session) {
+		if (session.getAttribute("authUser") != null) {
+			// 로그인 된 상태
+//			rttr.addFlashAttribute("login", true);
+			return "redirect:/index.jsp";
+		} else {
+			// 로그인 안된 상태
+			return "member/login";
+		}
 	}
 
 	// ##로그인 - POST
@@ -130,19 +133,22 @@ public class MemberController {
 			boolean checkMemberPw =
 					service.checkMember(inputPw, user.getPassword());
 			
-			
 			if(checkMemberPw) {
 				session.setAttribute("authUser", user);
 				//세션에 정보 담기
+				
+				//이메일 정보 쪼개기 - 세션에 담기 
+				MEmailDTO emailDTO = new MEmailDTO();
+				
+				
+				emailDTO.emailSplit(user.getEmail());
+				session.setAttribute("emailDTO", emailDTO);
 							
-				
-				
-			}
 				return new ResponseEntity<> ("success", HttpStatus.OK);
-			} else {
-				return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);		
 			}
 		}
+		return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);		
+	}
 	
 	
 	// ##로그아웃 

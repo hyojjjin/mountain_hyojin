@@ -52,9 +52,8 @@
 			
 			}).fail(function() {
 				console.log("등록 실패");
-
-					 alert("아이디 또는 비밀번호를 확인해주세요.");
-				
+					alert("아이디 또는 비밀번호를 확인해주세요.");
+							
 			}).done(function(data, status, xhr) {
 				console.log("등록 성공");
 				window.location.href="/mountain/index.jsp";				
@@ -69,6 +68,9 @@
 <body>
 
 <m:topNav />
+
+로그인 된 아이디 : ${authUser.id } <br>
+로그인 된 NO : ${authUser.no }
 
   <div class="form-group row">
     <label for="inputId" class="col-sm-2 col-form-label">아이디</label>
@@ -92,7 +94,30 @@
   </div>
   
    <button class="btn btn-primary" id="loginButton" >로그인</button>
-  
 
+	<!-- ##로그인 실패 - 모달 -->
+	<div class="modal fade" id="#loginFailModal" tabindex="-1"
+		aria-labelledby="#loginFailModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="ModalTitle">로그인 실패</h5>
+					<button id="loginFailCancel1" type="button" class="close"
+						data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				
+				<div class="modal-body">
+       			 	<p>로그인이 실패하였습니다. 아이디 또는 비밀번호를 확인해주세요</p>
+     			</div>
+     			
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="memberDelete"
+					data-dismiss="modal" id="loginFailCancel1">확인</button>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

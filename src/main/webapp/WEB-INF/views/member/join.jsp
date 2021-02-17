@@ -63,21 +63,18 @@
 			});
 		});
 		
-/* 		//아이디 중복 검사를 해주세요.
+ 		//아이디 중복 검사를 해주세요.
 		$("#join").click(function(e) {
 			e.preventDefault();
 			if($("#checkedId").val() == ''){
 				alert("아이디 중복 확인을 해주세요.");
-				 $("input[name='checked_id']").eq(0).focus(); 
+		//		 $("input[name='checked_id']").eq(0).focus(); //커서 옮기기
 				return false;
-				
 			}
+			$("#joinForm1").submit();
 		});
-*/
-		
-		
-		
-		
+
+	
 		// ##닉네임 중복 검사
 		$("#nicknameDupCheck").click(function(e) {
 			e.preventDefault();
@@ -109,16 +106,15 @@
 		});
 		
 		
-/* 		//닉네임 중복 검사를 해주세요.
+ 		//닉네임 중복 검사를 해주세요.
 		$("#join").click(function(e) {
 			e.preventDefault();
 			if($("#checkedNn").val() == ''){
 				alert("닉네임 중복 확인을 해주세요.");
-				$("input[name='checked_id']").eq(0).focus();
 				return false;
-				
 			}
-		}); */
+			$("#joinForm1").submit();
+		});
 		
 		//<!-- 이메일 주소 선택  -->
     	// ##이메일 셀렉트 선택
@@ -163,11 +159,11 @@
 
 <m:topNav />
 
-<form method="post">
+<form id="joinForm1" method="post">
   <div class="form-group row">
     <label for="inputId" class="col-sm-2 col-form-label">아이디</label>
     <div class="col-sm-10">
-      <input type="text" name="id" class="form-control" id="inputId" pattern="[a-z0-9]{4,20}">
+      <input type="text" name="id" class="form-control" id="inputId" pattern="[a-z0-9]{4,20}" required>
       <small class="form-text" style="color: gray" id="idPattern">
       숫자 또는 영문 소문자를 이용하여 입력하세요. (4~20글자)
       </small>
@@ -194,7 +190,7 @@
   <div class="form-group row">
     <label for="password" class="col-sm-2 col-form-label">비밀번호</label>
     <div class="col-sm-10">
-      <input type="password" name="password" class="form-control" id="password" pattern="(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}">
+      <input type="password" name="password" class="form-control" id="password" pattern="(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}" required>
       <small class="form-text" style="color: gray" id="pwPattern">
       영문 대소문자, 숫자, 특수문자를 각 1개 이상 사용하여 입력하세요. (8글자 이상)
       </small>
@@ -235,7 +231,7 @@
 <!--    <input type="text" name="email" class="form-control" id="email"> -->
  	
  	
-        <input type="text" id="email" value="" placeholder="이메일 입력" > 
+        <input type="text" id="email" value="" placeholder="이메일 입력" required> 
  		<span>@</span>
 		 <input id="textEmail" placeholder="이메일을 선택하세요."> 
  		<select id="select">
@@ -266,11 +262,7 @@
   <div class="form-group row">
     <label for="name" class="col-sm-2 col-form-label">이름</label>
     <div class="col-sm-10">
-      <input type="text" name="name" class="form-control" id="name" pattern="[가-힣a-z]{1,20}">
-      <small class="form-text" style="color: gray" id="namePattern">
-      한글 또는 영어 소문자로 입력하세요.
-      </small>
-	    
+      <input type="text" name="name" class="form-control" id="name" required>	    
       <c:if test="${errors.memberName }">
       	<small class="form-text" style="color: tomato">
       		이름을 입력해주세요.
@@ -284,11 +276,7 @@
   <div class="form-group row">
     <label for="inputNickname" class="col-sm-2 col-form-label">닉네임</label>
     <div class="col-sm-10">
-      <input type="text" name="nickname" class="form-control" id="inputNickname" pattern="[가-힣a-z]{1,20}">
-      <small class="form-text" style="color: gray" id="nnPattern">
-      한글 또는 영어 소문자로 입력하세요.
-      </small>
-      
+      <input type="text" name="nickname" class="form-control" id="inputNickname" required>    
       <c:if test="${errors.memberNickname }">
       	<small class="form-text" style="color: tomato">
       		닉네임을 입력해주세요.
@@ -311,7 +299,7 @@
   
     <label for="loc" class="col-sm-2 col-form-label">주소</label>
     <div class="col-sm-10">
-    <input type="hidden" name="loc" id="loc-input">
+    <input type="hidden" name="loc" id="loc-input" required>
 	
 		
 	<!-- //주소 api input 태그	 -->	 
