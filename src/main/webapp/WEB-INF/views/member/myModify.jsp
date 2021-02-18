@@ -61,15 +61,7 @@
         function showPwPattern() {
         	$("#pwPattern").show();
         }
-        
-        $("#staticPw").keyup(showPwPattern); 
-        
-        function errors() {
-        	if($("#errors").val() == "errors") {
-        		$("#modifySubmit").attr('disabled', true);
-        	}
-        }
-        
+                
     });
 </script>
 
@@ -89,7 +81,7 @@
   <div class="form-group row">
     <label for="staticPw" class="col-sm-2 col-form-label">비밀번호</label>
     <div class="col-sm-10">
-      <input type="password" name="password" class="form-control-plaintext" id="staticPw" pattern="([a-zA-Z]+\d{1}\w*)|(\d+[a-zA-Z]{1}\w*)" value="${sessionScope.authUser.password }">
+      <input type="password" name="password" class="form-control-plaintext" id="staticPw" pattern="([a-zA-Z]+\d{1}\w*)|(\d+[a-zA-Z]{1}\w*)" value="${sessionScope.authUser.password }" required>
       <small class="form-text" style="color: gray" id="pwPattern">
       	영문 대소문자, 숫자를 조합하여 입력하세요. (2글자 이상)
       </small>
@@ -104,15 +96,15 @@
   <div class="form-group row">
     <label for="staticNickname" class="col-sm-2 col-form-label">닉네임</label>
     <div class="col-sm-10">
-      <input type="text" name="nickname" class="form-control-plaintext" id="staticNickname" value="${sessionScope.authUser.nickname }">
+      <input type="text" name="nickname" class="form-control-plaintext" id="staticNickname" value="${sessionScope.authUser.nickname }" required>
     </div>
   </div>
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
     <div class="col-sm-10" id="staticEmail">
-   		<input type="text" id="emailFront" value="${emailDTO.emailFront }" placeholder="이메일 입력" > 
+   		<input type="text" id="emailFront" value="${emailDTO.emailFront }" placeholder="이메일 입력" required > 
  		<span>@</span>
-		 <input id="emailSelect" value="${emailDTO.emailSelect }" placeholder="이메일을 선택하세요."> 
+		 <input id="emailSelect" value="${emailDTO.emailSelect }" placeholder="이메일을 선택하세요." required> 
  		<select id="select">
          	   <option value="" disabled selected>E-Mail 선택</option>
 	            <option value="naver.com" id="naver.com">naver.com</option>
@@ -150,10 +142,8 @@
     </div>
   </div>
   
-	<c:if test="${errors }">
-		<input type="hidden" value="errors" id="errors" >
-	</c:if>
-	<button type="submit" class="btn btn-primary" id="modifySubmit" >수정</button>
+
+	<button type="submit" class="btn btn-primary">수정</button>
 
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>

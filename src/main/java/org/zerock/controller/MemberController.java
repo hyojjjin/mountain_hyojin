@@ -2,6 +2,7 @@ package org.zerock.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -64,18 +65,30 @@ public class MemberController {
 		//아이디 값이 있으면
 		log.info(inputId);
 		
+		//패턴 검사
+		String pattern = "[a-z0-9]{4,20}"; //영문 소문자, 숫자 4~20글자 가능
+		boolean regex = Pattern.matches(pattern, inputId);
+		
+		
 		if(inputId.equals("")) {
-			return "-2";
-		} else {
+			return "-2"; // null 값 입력 -2 리턴
+		} else if (regex) {
+		//null값 아니고, 정규식이 맞을 때		
 			MemberVO member = service.getMemberId(inputId);
-			
+				
 			if(member == null) {
 				return "0"; //회원이 없으면 0 리턴
 			} else {
 				return "-1"; //회원있으면 -1 리턴
 			}
+		} else {
+			// 정규식에 맞지 않을때
+			return "-3";
 		}
 	}
+	//test/test
+	//tst/test
+	//tst/test
 	
 	// ##회원가입 - 닉네임 중복 체크
 	@GetMapping("/join/nicknameDupCheck")
@@ -114,7 +127,7 @@ public class MemberController {
 			return "member/login";
 		}
 	}
-
+ 
 	// ##로그인 - POST
 	@PostMapping("/login")
 	@ResponseBody
@@ -150,7 +163,6 @@ public class MemberController {
 		return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);		
 	}
 	
-	
 	// ##로그아웃 
 	@GetMapping("/logout")
 	public String logout(MemberVO member, HttpSession session) {
@@ -161,7 +173,6 @@ public class MemberController {
 		
 		return "redirect:/index.jsp";
 	}
-	//로그아웃 post 방식은?? 왜 겟방식이지
 	
 	// ##joinErrors 
 	public void validate(Map<String, Boolean> errors, MemberVO member) {
@@ -227,7 +238,7 @@ public class MemberController {
 		boolean checkMember = service.checkMember(findMember.getId(), member.getId());
 		//같은 아이디인지 확인
 		
-		if(session.getAttribute("errors") == null) {
+		if(errors.isEmpty()) {
 			//새롭게 set errors 
 			//에러가 없으면 수정 진행
 			if(checkMember) {

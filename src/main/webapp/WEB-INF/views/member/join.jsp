@@ -25,13 +25,20 @@
 <script>
 	$(document).ready(function() {
 	
-		// ##아이디 중복 멘트 - hide
+		// ##아이디 중복 확인 멘트 - hide
 		$('#idOk').hide();
 		$('#idDup').hide();
+		$('#idNull').hide();
 		
-		// ##닉네임 중복 멘트 - hide
+		// ##아이디 패턴 검사
+		$('#idPattern').show();
+		$('#idPattern').attr("style", "color:gray");
+		
+		// ##닉네임 중복 확인 멘트 - hide
 		$('#nicknameOk').hide();
 		$('#nicknameDup').hide();
+		$('#nicknameNull').hide();
+
 		
 		// ##아이디 중복 검사
 		$("#idDupCheck").click(function(e) {
@@ -45,17 +52,39 @@
 			}).done(function(data) {
 				console.log("아이디 중복 검사");
 				if(data != null) {
+					$('#idNullError').hide();
 					if(data == '0' ) {
+						console.log("사용할 수 있음");
 						$('#idDup').hide();
+						$('#idNull').hide();
+						$('#idPattern').hide();
+						
 						alert("아이디를 사용할 수 있습니다.");
 						$("#checkedId").val('y');
 						$('#idOk').show();
 					} else if(data == '-1') {
+						console.log("중복 아이디");
 						$('#idOk').hide();
+						$('#idNull').hide();
+						$('#idPattern').hide();
 						alert("중복된 아이디입니다.");
 						$('#idDup').show();
 					} else if(data == '-2') {
+						console.log("아이디 null");
+						$('#idDup').hide();
+						$('#idNull').hide();
+						$('#idPattern').show();
+						$('#idPattern').attr("style", "color:tomato");
 						$('#idNull').show(); //inputId가 빈 스트링일때 아이디를 적어주세요 멘트 어떻게 하냐!!!
+					} else if(data == '-3') {
+						console.log("아이디 패턴 x");
+						$('#idOk').hide();
+						$('#idDup').hide();
+						$('#idNull').hide();
+						
+						$('#idPattern').show();
+						$('#idPattern').attr("style", "color:tomato"); //inputid 패턴식 false
+						
 					}
 				} 
 			}).fail(function() {
@@ -63,7 +92,7 @@
 			});
 		});
 		
- 		//아이디 중복 검사를 해주세요.
+  		//아이디 중복 검사를 해주세요.
 		$("#join").click(function(e) {
 			e.preventDefault();
 			if($("#checkedId").val() == ''){
@@ -72,7 +101,7 @@
 				return false;
 			}
 			$("#joinForm1").submit();
-		});
+		}); 
 	
 		// ##닉네임 중복 검사
 		$("#nicknameDupCheck").click(function(e) {
@@ -84,18 +113,25 @@
 				url: "/mountain/member/join/nicknameDupCheck",
 				data: {inputNickname:inputNickname}
 			}).done(function(data) {
-				console.log("등록 성공111");
+				console.log("닉네임 중복 검사");
 				if(data != null) {
 					if(data == '0' ) {
+						console.log("사용할 수 있음");
 						$('#nicknameDup').hide();
+						$('#nicknameNull').hide();
 						alert("닉네임을 사용할 수 있습니다.");
 						$("#checkedNn").val('y');
 						$('#nicknameOk').show();
 					} else if(data == '-1') {
+						console.log("중복된 닉네임");
 						$('#nicknameOk').hide();
+						$('#nicknameNull').hide();
 						alert("중복된 닉네임입니다.");
 						$('#nicknameDup').show();
 					} else if(data == '-2') {
+						console.log("닉네임 null");
+						$('#nicknameOk').hide();
+						$('#nicknameDup').hide();
 						$('#nicknameNull').show(); //inputId가 빈 스트링일때 아이디를 적어주세요 멘트 어떻게 하냐!!!
 					}
 				} 
@@ -167,18 +203,22 @@
       숫자 또는 영문 소문자를 이용하여 입력하세요. (4~20글자)
       </small>
       <c:if test="${errors.memberId }">
-      	<small class="form-text" style="color: tomato" id="idNull">
+      	<small class="form-text" style="color: tomato" id="idNullError">
       		아이디를 입력해주세요.
       	</small>
       </c:if>
       
+      <!-- 아이디 중복검사 -->
+      <small class="form-text" style="color: tomato" id="idNull">
+      		아이디를 입력해주세요.
+      </small>
+      	
       <small class="form-text" style="color: DodgerBlue" id="idOk" >
       		사용 가능한 아이디입니다.
   	  </small>
       <small class="form-text" style="color: tomato" id="idDup" >
       		중복된 아이디입니다.
   	  </small>
-  	  
       
      <button class="btn btn-primary" id="idDupCheck" >아이디 중복 확인</button>
      <input type="hidden" id="checkedId" value="">
@@ -204,7 +244,7 @@
   <div class="form-group row">
     <label for="pwConfirm" class="col-sm-2 col-form-label">비밀번호 확인</label>
     <div class="col-sm-10">
-      <input type="password" name="pwConfirm" class="form-control" id="pwConfirm">
+      <input type="password" name="pwConfirm" class="form-control" id="pwConfirm" required>
       
       <c:if test="${errors.pwNotMatch }">
       	<small class="form-text" style="color: tomato">
@@ -276,18 +316,24 @@
     <label for="inputNickname" class="col-sm-2 col-form-label">닉네임</label>
     <div class="col-sm-10">
       <input type="text" name="nickname" class="form-control" id="inputNickname" required value=${param.nickname }>    
-      <c:if test="${errors.memberNickname }">
+
+     <c:if test="${errors.memberNickname }">
       	<small class="form-text" style="color: tomato">
       		닉네임을 입력해주세요.
       	</small>
       </c:if>
       
+      <!-- 닉네임 중복검사 -->
+      <small class="form-text" style="color: tomato" id="nicknameNull">
+      		닉네임을 입력해주세요.
+      </small>
       <small class="form-text" style="color: DodgerBlue" id="nicknameOk" >
       		사용 가능한 닉네임입니다.
   	  </small>
       <small class="form-text" style="color: tomato" id="nicknameDup" >
       		중복된 닉네임입니다.
   	  </small>
+  
      <button class="btn btn-primary" id="nicknameDupCheck" >닉네임 중복 확인</button>
       <input type="hidden" id="checkedNn" value="">
     </div>

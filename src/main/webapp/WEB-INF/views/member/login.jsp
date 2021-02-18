@@ -21,13 +21,13 @@
 	$(document).ready(function() {
 		
 		$('#idNull').hide();
-		$('#pwNull').hide();
+		$('#pwNull').hide(); 
 		
-		$("#loginButton").click(function() {
+		$("#loginButton").click(function(e) {
+		e.preventDefault(); //submit 버튼의 기본 기능(submit) 을 막음!
 			$('#idNull').hide(); 
 			$('#pwNull').hide();
 			
-	//	e.preventDefault(); submit 버튼의 기본 기능(submit) 을 막음!
 		var inputId = $('#inputId').val();
 		var inputPw = $('#inputPw').val();
 			
@@ -61,16 +61,16 @@
 		
 			});
 		});
-		
-		/* 엔터키로 로그인 버튼 누르기 */
-/* 		function enterLogin(){
+/* 		
+		 엔터키로 focus 이동 
+ 		function enterNextFocus(next){
 			var keyCode = window.event.keyCode;
-			
 			if(keyCode == 13) {
-				console.log("로그인 시도");
-				loginForm.submit();
+				console.log("엔터키 누름");
+				document.getElementById(next).focus();
+				$().eq(0).focus();
 			}
-		} */
+		}   */
     });
 </script>
 
