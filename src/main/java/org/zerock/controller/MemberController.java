@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.member.MEmailDTO;
 import org.zerock.domain.member.MemberVO;
 import org.zerock.service.member.MemberService;
@@ -43,19 +42,20 @@ public class MemberController {
 		Map<String, Boolean> errors = new HashMap<String, Boolean>();
 		req.setAttribute("errors", errors);
 		validate(errors, member);
+		//HttpServletRequest req
+		//errors가 한번이라도 남아있으면 제거를 해줘야함..
 		
 		if (errors.isEmpty()) {
 			service.register(member);
 			// 서비스에 일을 시키고
 			log.info(member);
 			return "redirect:joinSuccess";
-			
 
 		} else {
 			return "/member/join";
 		}
-		
 	}
+	
 	// ##회원가입 - 아이디 중복 체크
 	@GetMapping("/join/idDupCheck")
 	@ResponseBody
@@ -212,41 +212,48 @@ public class MemberController {
 	
 	// ##내 정보 수정 - POST
 	@PostMapping("/myModify")
-	public String myModify(MemberVO member, HttpSession session) {
+	public String myModify(MemberVO member, HttpSession session, HttpServletRequest req) {
+		
+		Map<String, Boolean> errors = new HashMap<String, Boolean>();
+		req.setAttribute("errors", errors);
+		validate(errors, member);
 		
 		MemberVO user = (MemberVO) session.getAttribute("authUser");
 		log.info(user);
 		log.info(service);
 		log.info(member);
-		MemberVO userMember = service.getMemberId(user.getId());
+		MemberVO findMember = service.getMemberId(user.getId());
 		
-		boolean checkMember = service.checkMember(userMember.getId(), member.getId());
+		boolean checkMember = service.checkMember(findMember.getId(), member.getId());
 		//같은 아이디인지 확인
 		
-		if(checkMember) {
-			service.modify(member); 
+		if(session.getAttribute("errors") == null) {
+			//새롭게 set errors 
+			//에러가 없으면 수정 진행
+			if(checkMember) {
+				
+				service.modify(member); 
+				log.info("수정 서비스 실행)");
+				log.info(member);
+				
+				session.setAttribute("authUser", member);
+				//수정된 멤버 정보를 세션에 저장
+				
+				MEmailDTO emailDTO = new MEmailDTO();
+				emailDTO.emailSplit(member.getEmail());
+				session.setAttribute("emailDTO", emailDTO);
+				//수정된 이메일 정보를 세션에 저장
+				
+				return "/member/myHome";
 			
-			log.info(member);
-			
-			session.setAttribute("authUser", member);
-			//수정된 멤버 정보를 세션에 저장
-			
-			MEmailDTO emailDTO = new MEmailDTO();
-			emailDTO.emailSplit(member.getEmail());
-			session.setAttribute("emailDTO", emailDTO);
-			//수정된 이메일 정보를 세션에 저장
-			
-			return "/member/myHome";
-		
+			}
 		}
-	
-		return "/member/myHome";
+		//에러가 있으면
+		return "/member/myModify";
 		//오류 표시 해야함. 또는 홈으로 이동?? 어떻게 할까 모달창이 떠야하나?
 		
 	}
 	 
-	
-	
 	// ##회원 삭제
 	@DeleteMapping("/delete")
 	@ResponseBody
@@ -264,12 +271,10 @@ public class MemberController {
 			if(session != null) {
 				session.invalidate();
 			}
-			
 			return new ResponseEntity<> ("success", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);		
 		}
 	}
 
-	
 }

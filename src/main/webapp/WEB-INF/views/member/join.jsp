@@ -43,7 +43,7 @@
 				url: "/mountain/member/join/idDupCheck",
 				data: {inputId:inputId}
 			}).done(function(data) {
-				console.log("등록 성공");
+				console.log("아이디 중복 검사");
 				if(data != null) {
 					if(data == '0' ) {
 						$('#idDup').hide();
@@ -73,7 +73,6 @@
 			}
 			$("#joinForm1").submit();
 		});
-
 	
 		// ##닉네임 중복 검사
 		$("#nicknameDupCheck").click(function(e) {
@@ -85,7 +84,7 @@
 				url: "/mountain/member/join/nicknameDupCheck",
 				data: {inputNickname:inputNickname}
 			}).done(function(data) {
-				console.log("등록 성공");
+				console.log("등록 성공111");
 				if(data != null) {
 					if(data == '0' ) {
 						$('#nicknameDup').hide();
@@ -163,7 +162,7 @@
   <div class="form-group row">
     <label for="inputId" class="col-sm-2 col-form-label">아이디</label>
     <div class="col-sm-10">
-      <input type="text" name="id" class="form-control" id="inputId" pattern="[a-z0-9]{4,20}" required>
+      <input type="text" name="id" class="form-control" id="inputId" pattern="[a-z0-9]{4,20}" required value=${param.id }>
       <small class="form-text" style="color: gray" id="idPattern">
       숫자 또는 영문 소문자를 이용하여 입력하세요. (4~20글자)
       </small>
@@ -190,9 +189,9 @@
   <div class="form-group row">
     <label for="password" class="col-sm-2 col-form-label">비밀번호</label>
     <div class="col-sm-10">
-      <input type="password" name="password" class="form-control" id="password" pattern="(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}" required>
+      <input type="password" name="password" class="form-control" id="password" pattern="([a-zA-Z]+\d{1}\w*)|(\d+[a-zA-Z]{1}\w*)" required>
       <small class="form-text" style="color: gray" id="pwPattern">
-      영문 대소문자, 숫자, 특수문자를 각 1개 이상 사용하여 입력하세요. (8글자 이상)
+      영문 대소문자, 숫자를 조합하여 입력하세요. (2글자 이상)
       </small>
       <c:if test="${errors.memberPw }">
       	<small class="form-text" style="color: tomato">
@@ -230,12 +229,12 @@
      
 <!--    <input type="text" name="email" class="form-control" id="email"> -->
  	
- 	
-        <input type="text" id="email" value="" placeholder="이메일 입력" required> 
+        <input type="text" name="emailFront" id="email" value="${param.emailFront}" placeholder="이메일 입력" required> 
  		<span>@</span>
-		 <input id="textEmail" placeholder="이메일을 선택하세요."> 
+		 <input id="textEmail" name="textEmail" value="${param.textEmail}"  placeholder="이메일을 선택하세요."> 
  		<select id="select">
-         	   <option value="" disabled selected>E-Mail 선택</option>
+ 				
+         	    <option value="" disabled selected>E-Mail 선택</option>
 	            <option value="naver.com" id="naver.com">naver.com</option>
 	            <option value="hanmail.net" id="hanmail.net">hanmail.net</option>
 	            <option value="gmail.com" id="gmail.com">gmail.com</option>
@@ -262,7 +261,7 @@
   <div class="form-group row">
     <label for="name" class="col-sm-2 col-form-label">이름</label>
     <div class="col-sm-10">
-      <input type="text" name="name" class="form-control" id="name" required>	    
+      <input type="text" name="name" class="form-control" id="name" required value=${param.name }> 	    
       <c:if test="${errors.memberName }">
       	<small class="form-text" style="color: tomato">
       		이름을 입력해주세요.
@@ -276,7 +275,7 @@
   <div class="form-group row">
     <label for="inputNickname" class="col-sm-2 col-form-label">닉네임</label>
     <div class="col-sm-10">
-      <input type="text" name="nickname" class="form-control" id="inputNickname" required>    
+      <input type="text" name="nickname" class="form-control" id="inputNickname" required value=${param.nickname }>    
       <c:if test="${errors.memberNickname }">
       	<small class="form-text" style="color: tomato">
       		닉네임을 입력해주세요.

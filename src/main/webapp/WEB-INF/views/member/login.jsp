@@ -53,13 +53,24 @@
 			}).fail(function() {
 				console.log("등록 실패");
 					alert("아이디 또는 비밀번호를 확인해주세요.");
-							
+			//		window.location.href="/mountain/login.jsp";		
+				
 			}).done(function(data, status, xhr) {
 				console.log("등록 성공");
 				window.location.href="/mountain/index.jsp";				
 		
 			});
-		});  
+		});
+		
+		/* 엔터키로 로그인 버튼 누르기 */
+/* 		function enterLogin(){
+			var keyCode = window.event.keyCode;
+			
+			if(keyCode == 13) {
+				console.log("로그인 시도");
+				loginForm.submit();
+			}
+		} */
     });
 </script>
 
@@ -71,6 +82,7 @@
 
 로그인 된 아이디 : ${authUser.id } <br>
 로그인 된 NO : ${authUser.no }
+<form name="loginForm">
 
   <div class="form-group row">
     <label for="inputId" class="col-sm-2 col-form-label">아이디</label>
@@ -95,7 +107,7 @@
   
    <button class="btn btn-primary" id="loginButton" >로그인</button>
 
-	<!-- ##로그인 실패 - 모달 -->
+	<!-- ##로그인 실패 - 모달
 	<div class="modal fade" id="#loginFailModal" tabindex="-1"
 		aria-labelledby="#loginFailModal" aria-hidden="true">
 		<div class="modal-dialog">
@@ -118,6 +130,8 @@
 					data-dismiss="modal" id="loginFailCancel1">확인</button>
 			</div>
 		</div>
-	</div>
+	</div> -->
+	
+</form>	
 </body>
 </html>

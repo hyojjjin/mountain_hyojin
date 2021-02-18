@@ -20,6 +20,8 @@
 
 <script>
 	$(document).ready(function() {
+		$("#pwPattern").hide();
+		
 	/* 주소 값을 합쳐서 name으로 보내기 */
         function setLocInput() {
         	var loc = $("#sample3_postcode").val() + "|" + $("#sample3_address").val() + " " +
@@ -55,6 +57,19 @@
         $("#emailFront").keyup(setEmailInput);
         $("#emailSelect").keyup(setEmailInput);    
         
+        /* 비밀번호 값을 수정하면 pattern 멘트 */
+        function showPwPattern() {
+        	$("#pwPattern").show();
+        }
+        
+        $("#staticPw").keyup(showPwPattern); 
+        
+        function errors() {
+        	if($("#errors").val() == "errors") {
+        		$("#modifySubmit").attr('disabled', true);
+        	}
+        }
+        
     });
 </script>
 
@@ -74,7 +89,10 @@
   <div class="form-group row">
     <label for="staticPw" class="col-sm-2 col-form-label">비밀번호</label>
     <div class="col-sm-10">
-      <input type="password" name="password" class="form-control-plaintext" id="staticPw" value="${sessionScope.authUser.password }">
+      <input type="password" name="password" class="form-control-plaintext" id="staticPw" pattern="([a-zA-Z]+\d{1}\w*)|(\d+[a-zA-Z]{1}\w*)" value="${sessionScope.authUser.password }">
+      <small class="form-text" style="color: gray" id="pwPattern">
+      	영문 대소문자, 숫자를 조합하여 입력하세요. (2글자 이상)
+      </small>
     </div>
   </div>
   <div class="form-group row">
@@ -132,10 +150,10 @@
     </div>
   </div>
   
-  
-  
-	
-	<button type="submit" class="btn btn-primary">수정</button>
+	<c:if test="${errors }">
+		<input type="hidden" value="errors" id="errors" >
+	</c:if>
+	<button type="submit" class="btn btn-primary" id="modifySubmit" >수정</button>
 
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>

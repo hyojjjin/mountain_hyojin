@@ -89,11 +89,6 @@ $(document).ready(function() {
       <input type="text" readonly class="form-control-plaintext" id="staticId" value="${sessionScope.authUser.id }">
     </div>
   </div>
-  <div class="form-group row">
-    <label for="staticPassword" class="col-sm-2 col-form-label">비밀번호</label>
-    <div class="col-sm-10">
-      <input type="password" readonly class="form-control-plaintext" id="staticPassword" value="${sessionScope.authUser.name }">
-  </div>
   </div>
   <div class="form-group row">
     <label for="staticName" class="col-sm-2 col-form-label">이름</label>
