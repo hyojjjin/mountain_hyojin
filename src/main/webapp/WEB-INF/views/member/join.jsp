@@ -37,8 +37,8 @@
 		// ##닉네임 중복 확인 멘트 - hide
 		$('#nicknameOk').hide();
 		$('#nicknameDup').hide();
-		$('#nicknameNull').hide();
-
+		$('#nicknameNull').hide();	
+		
 		
 		// ##아이디 중복 검사
 		$("#idDupCheck").click(function(e) {
@@ -92,7 +92,7 @@
 			});
 		});
 		
-  		//아이디 중복 검사를 해주세요.
+  		// ##아이디 중복 검사를 해주세요.
 		$("#join").click(function(e) {
 			e.preventDefault();
 			if($("#checkedId").val() == ''){
@@ -101,7 +101,7 @@
 				return false;
 			}
 			$("#joinForm1").submit();
-		}); 
+		}); 		
 	
 		// ##닉네임 중복 검사
 		$("#nicknameDupCheck").click(function(e) {
@@ -150,7 +150,35 @@
 			}
 			$("#joinForm1").submit();
 		});
+ 		
+ 		
+ 		// ## 키업 될때, 아이디, 닉네임 중복 확인 필요
+ 		function setIdReset() {
+ 			$("#checkedId").val('');
+ 		}	
+ 	        $("#inputId").keyup(setIdReset);
+ 	        
+ 		function setNnReset() {
+ 			$("#checkedNn").val('');
+ 		}	
+ 	        $("#inputNickname").keyup(setNnReset);
 		
+ 		
+ 		//비밀번호 패턴 안내
+ 		$('#join').click(function() {
+ 			if($('#pwPatternError').val() != null) {
+ 				//비밀번호 패턴 에러가 있다면
+ 				console.log("#pwPatternError");
+ 				$('#pwPatternError').show();
+ 			} else if($('#pwNullError').val() != null) {
+ 				//비밀번호가 null 이면	
+ 				$('#pwPattern').hide();
+ 				$('#pwPatternError').show();
+ 			}
+ 			
+ 			
+ 		}); 
+ 		
 		//<!-- 이메일 주소 선택  -->
     	// ##이메일 셀렉트 선택
         $('#select').change(function() {
@@ -220,7 +248,7 @@
       		중복된 아이디입니다.
   	  </small>
       
-     <button class="btn btn-primary" id="idDupCheck" >아이디 중복 확인</button>
+     <button type="button" class="btn btn-primary" id="idDupCheck" >아이디 중복 확인</button>
      <input type="hidden" id="checkedId" value="">
     </div>
 
@@ -230,11 +258,18 @@
     <label for="password" class="col-sm-2 col-form-label">비밀번호</label>
     <div class="col-sm-10">
       <input type="password" name="password" class="form-control" id="password" pattern="([a-zA-Z]+\d{1}\w*)|(\d+[a-zA-Z]{1}\w*)" required>
-      <small class="form-text" style="color: gray" id="pwPattern">
-      영문 대소문자, 숫자를 조합하여 입력하세요. (2글자 이상)
-      </small>
+      <c:if test="${not errors.pwPatternError }">
+	      <small class="form-text" style="color: gray" id="pwPattern">
+	      영문 대소문자, 숫자를 조합하여 입력하세요. (2글자 이상)
+	      </small>
+      </c:if>
+      <c:if test="${errors.pwPatternError }">
+      	<small class="form-text" style="color: tomato" id="pwPatternError" >
+      		영문 대소문자, 숫자를 조합하여 입력하세요. (2글자 이상)
+      	</small>
+      </c:if>
       <c:if test="${errors.memberPw }">
-      	<small class="form-text" style="color: tomato">
+      	<small class="form-text" style="color: tomato" id="pwNullError">
       		비밀번호를 입력해주세요.
       	</small>
       </c:if>
@@ -246,9 +281,9 @@
     <div class="col-sm-10">
       <input type="password" name="pwConfirm" class="form-control" id="pwConfirm" required>
       
-      <c:if test="${errors.pwNotMatch }">
+      <c:if test="${errors.pwNotMatch }" >
       	<small class="form-text" style="color: tomato">
-      		비밀번호와 일치하지 않습니다.
+      		비밀번호가 일치하지 않습니다.
       	</small>
       </c:if>
       <c:if test="${errors.memberPwConfirm }">
@@ -268,7 +303,7 @@
       
      
 <!--    <input type="text" name="email" class="form-control" id="email"> -->
- 	
+
         <input type="text" name="emailFront" id="email" value="${param.emailFront}" placeholder="이메일 입력" required> 
  		<span>@</span>
 		 <input id="textEmail" name="textEmail" value="${param.textEmail}"  placeholder="이메일을 선택하세요."> 
@@ -334,7 +369,7 @@
       		중복된 닉네임입니다.
   	  </small>
   
-     <button class="btn btn-primary" id="nicknameDupCheck" >닉네임 중복 확인</button>
+     <button type="button" class="btn btn-primary" id="nicknameDupCheck" >닉네임 중복 확인</button>
       <input type="hidden" id="checkedNn" value="">
     </div>
   </div>
@@ -366,7 +401,9 @@
   </div>
 
 
-  <button type="submit" class="btn btn-primary" id="join">회원 가입</button>
+  <button type="submit" class="btn btn-primary" id="join" >회원 가입</button>
+  
+
   
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>

@@ -89,7 +89,6 @@ $(document).ready(function() {
       <input type="text" readonly class="form-control-plaintext" id="staticId" value="${sessionScope.authUser.id }">
     </div>
   </div>
-  </div>
   <div class="form-group row">
     <label for="staticName" class="col-sm-2 col-form-label">이름</label>
     <div class="col-sm-10">
@@ -142,85 +141,81 @@ $(document).ready(function() {
 	<!-- ##수정 버튼 -->
 	<a href="/mountain/member/myModify">
 		<button type="submit" class="btn btn-primary">회원 정보 수정</button>
-	</a>
+	</a>	
+	
+	//만약 세션이 만료되었다면 (로그아웃 되었습니다.) 인폼
 	
 <%-- 	<!-- ##탈퇴 버튼 -->
 	<a href="/member/delete">
 		<button type="submit" id="memberDelete" class="btn btn-primary" data-userId="${authUser.id }">회원 탈퇴</button>
 	</a> --%>
 	
-<!-- ##탈퇴 버튼 - 모달 -->
-<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#memberDeleteModal" data-whatever="@mdo">회원 탈퇴 모달</button>
-//@는 뭐지?
-
-<div class="modal fade" id="memberDeleteModal" tabindex="-1" aria-labelledby="memberDeleteModal" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalTitle">진심이세요?</h5>
-        <button id="memberDeleteCancel1" type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="pwConfirm" class="col-form-label">비밀번호 확인</label>
-            <input type="password" class="form-control" id="pwConfirm">
-          		<span class="form-text" style="color: tomato" id="pwError">
-      				비밀번호가 일치하지 않습니다.
-      			</span>
-      			<span class="form-text" style="color: tomato" id="pwNull">
-      				비밀번호를 입력해주세요.
-      			</span>
-          </div>
-          <div class="form-group">
-      
-
+	<!-- ##탈퇴 버튼 - 모달 -->
+	<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#memberDeleteModal" data-whatever="@mdo">회원 탈퇴 모달</button>
+	//@는 뭐지?
+	
+	<div class="modal fade" id="memberDeleteModal" tabindex="-1" aria-labelledby="memberDeleteModal" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="ModalTitle">진심이세요?</h5>
+	        <button id="memberDeleteCancel1" type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
 	      
+	      <div class="modal-body">
+	        <form>
+	          <div class="form-group">
+	            <label for="pwConfirm" class="col-form-label">비밀번호 확인</label>
+	            <input type="password" class="form-control" id="pwConfirm">
+	          		<span class="form-text" style="color: tomato" id="pwError">
+	      				비밀번호가 일치하지 않습니다.
+	      			</span>
+	      			<span class="form-text" style="color: tomato" id="pwNull">
+	      				비밀번호를 입력해주세요.
+	      			</span>
+	          </div>
+	        </form>
+	      </div>
 	      
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="memberDeleteCancel2">취소</button>        
-        <button type="button" class="btn btn-primary" id="memberDelete" data-userId="${authUser.id }">탈퇴</button>
-        
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="modal fade" id="memberDeleteSuccessModal" tabindex="-1" >
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalTitle">탈퇴하였습니다.</h5>
-      </div>
-      <div class="modal-body">
-      	// ##탈퇴 이유 - 나중에 없애도됨!
-         <br>
-            <label for="message-text" class="col-form-label">탈퇴하는 이유가 무엇인가요?</label>
-            <br>
-          <select id="select">
-         	   <option value="" disabled selected>홈페이지 개선에 도움을 주세요.</option>
-	            <option value="그냥1" id="go1">그냥1</option>
-	            <option value="그냥그냥2" id="go2">그냥그냥2</option>
-	            <option value="그냥그냥그냥3" id="go3">그냥그냥그냥3</option>
-	            <option value="directly" id="go4">직접 입력하기</option>
-	      </select>
-        
-      </div>
-      <div class="modal-footer">
-        <a href="${root }/index.jsp">
-        	<button type="button" class="btn btn-secondary">닫기</button>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="memberDeleteCancel2">취소</button>        
+	        <button type="button" class="btn btn-primary" id="memberDelete" data-userId="${authUser.id }">탈퇴</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	
+	<div class="modal fade" id="memberDeleteSuccessModal" tabindex="-1" >
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="ModalTitle">탈퇴하였습니다.</h5>
+	      </div>
+	      <div class="modal-body">
+	      	// ##탈퇴 이유 - 나중에 없애도됨!
+	         <br>
+	            <label for="message-text" class="col-form-label">탈퇴하는 이유가 무엇인가요?</label>
+	            <br>
+	          <select id="select">
+	         	   <option value="" disabled selected>홈페이지 개선에 도움을 주세요.</option>
+		            <option value="그냥1" id="go1">그냥1</option>
+		            <option value="그냥그냥2" id="go2">그냥그냥2</option>
+		            <option value="그냥그냥그냥3" id="go3">그냥그냥그냥3</option>
+		            <option value="directly" id="go4">직접 입력하기</option>
+		      </select>
+	        
+	      </div>
+	      <div class="modal-footer">
+	        <a href="${root }/index.jsp">
+	        	<button type="button" class="btn btn-secondary">닫기</button>
+	        </a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 </body>
 </html>

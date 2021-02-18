@@ -20,7 +20,69 @@
 
 <script>
 	$(document).ready(function() {
+		
+		// ##패스워드 패턴 확인 멘트 - hide
 		$("#pwPattern").hide();
+		
+		// ##닉네임 중복 확인 멘트 - hide
+		$('#nicknameOk').hide();
+		$('#nicknameDup').hide();
+		$('#nicknameNull').hide();	
+		
+		// ##닉네임 중복 검사
+		$("#nicknameDupCheck").click(function(e) {
+			e.preventDefault();
+			var inputNickname = $('#inputNickname').val();
+			
+			$.ajax({
+				type: "get",
+				url: "/mountain/member/join/nicknameDupCheck",
+				data: {inputNickname:inputNickname}
+			}).done(function(data) {
+				console.log("닉네임 중복 검사");
+				if(data != null) {
+					if(data == '0' ) {
+						console.log("사용할 수 있음");
+						$('#nicknameDup').hide();
+						$('#nicknameNull').hide();
+						alert("닉네임을 사용할 수 있습니다.");
+						$("#checkedNn").val('y');
+						$('#nicknameOk').show();
+					} else if(data == '-1') {
+						console.log("중복된 닉네임");
+						$('#nicknameOk').hide();
+						$('#nicknameNull').hide();
+						alert("중복된 닉네임입니다.");
+						$('#nicknameDup').show();
+					} else if(data == '-2') {
+						console.log("닉네임 null");
+						$('#nicknameOk').hide();
+						$('#nicknameDup').hide();
+						$('#nicknameNull').show(); //inputId가 빈 스트링일때 아이디를 적어주세요 멘트 어떻게 하냐!!!
+					}
+				} 
+			}).fail(function() {
+	
+			});
+		});
+		
+		//닉네임 수정을 했다면 중복 검사를 해주세요.
+		//만약 키 값을 눌렀다면?
+		function nnKeyUp(){
+			$("#checkedNn").val('');
+			$("#modify").click(function(e) {
+				e.preventDefault();
+				if($("#checkedNn").val() == ''){
+					alert("닉네임 중복 확인을 해주세요.");
+					return false;
+				})
+				$("#modifyForm1").submit();
+			 
+			
+		}
+		$("#inputNickname").keyup(nnKeyUp);
+		
+		
 		
 	/* 주소 값을 합쳐서 name으로 보내기 */
         function setLocInput() {
@@ -71,7 +133,7 @@
 
 <m:topNav />
 
-<form method="post" action="${root }/member/myModify" >
+<form method="post" action="${root }/member/myModify" id="modifyForm1">
   <div class="form-group row">
     <label for="staticId" class="col-sm-2 col-form-label">아이디</label>
     <div class="col-sm-10">
@@ -98,7 +160,21 @@
     <div class="col-sm-10">
       <input type="text" name="nickname" class="form-control-plaintext" id="staticNickname" value="${sessionScope.authUser.nickname }" required>
     </div>
-  </div>
+    <!-- 닉네임 중복검사 -->
+    <small class="form-text" style="color: tomato" id="nicknameNull">
+		닉네임을 입력해주세요.
+    </small>
+    <small class="form-text" style="color: DodgerBlue" id="nicknameOk" >
+		사용 가능한 닉네임입니다.
+ 	</small>
+    <small class="form-text" style="color: tomato" id="nicknameDup" >
+		중복된 닉네임입니다.
+ 	</small>
+ 
+    <button type="button" class="btn btn-primary" id="nicknameDupCheck" >닉네임 중복 확인</button>
+    <input type="hidden" id="checkedNn" value="">
+   </div>
+
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
     <div class="col-sm-10" id="staticEmail">
@@ -143,7 +219,8 @@
   </div>
   
 
-	<button type="submit" class="btn btn-primary">수정</button>
+	<button type="submit" class="btn btn-primary" id="modify" >수정</button>
+
 
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>

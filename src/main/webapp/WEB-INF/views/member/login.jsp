@@ -84,6 +84,12 @@
 로그인 된 NO : ${authUser.no }
 <form name="loginForm">
 
+	<c:if test="${notFoundUser }">
+		<small class="form-text" style="color: tomato" >
+ 			일정 시간이 지나 로그아웃 되었습니다. 다시 로그인을 해주세요.
+    	</small>
+	</c:if>
+
   <div class="form-group row">
     <label for="inputId" class="col-sm-2 col-form-label">아이디</label>
     <div class="col-sm-10">
