@@ -59,7 +59,7 @@ public class MemberController {
 	}
 
 	// ##회원가입 - 아이디 중복 체크
-	@GetMapping("/join/idDupCheck")
+	@GetMapping("/idDupCheck")
 	@ResponseBody
 	public String idDupCheck(String inputId) {
 
@@ -88,7 +88,7 @@ public class MemberController {
 	}
 
 	// ##회원가입 - 닉네임 중복 체크
-	@GetMapping("/join/nicknameDupCheck")
+	@GetMapping("/nicknameDupCheck")
 	@ResponseBody
 	public String nicknameDupCheck(String inputNickname) {
 

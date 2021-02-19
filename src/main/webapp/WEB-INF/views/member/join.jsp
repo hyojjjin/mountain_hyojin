@@ -47,7 +47,7 @@
 						
 			$.ajax({
 				type: "get",
-				url: "/mountain/member/join/idDupCheck",
+				url: "/mountain/member/idDupCheck",
 				data: {inputId:inputId}
 			}).done(function(data) {
 				console.log("아이디 중복 검사");
@@ -99,7 +99,7 @@
 				alert("아이디 중복 확인을 해주세요.");
 		//		 $("input[name='checked_id']").eq(0).focus(); //커서 옮기기
 				return false;
-			}
+			} 
 			$("#joinForm1").submit();
 		}); 		
 	
@@ -110,7 +110,7 @@
 			
 			$.ajax({
 				type: "get",
-				url: "/mountain/member/join/nicknameDupCheck",
+				url: "/mountain/member/nicknameDupCheck",
 				data: {inputNickname:inputNickname}
 			}).done(function(data) {
 				console.log("닉네임 중복 검사");
@@ -213,7 +213,7 @@
         $("#sample3_detailAddress").keyup(setLocInput);
         $("#sample3_extraAddress").change(setLocInput);
         
-    });
+
 </script>
 
 <title>산산산</title>
@@ -402,8 +402,9 @@
 
 
   <button type="submit" class="btn btn-primary" id="join" >회원 가입</button>
-  
-
+  <c:if test="${error }" >
+  	<input type="hidden" value="${error }" id="error"> 
+  </c:if>
   
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>

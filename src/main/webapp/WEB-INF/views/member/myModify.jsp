@@ -36,7 +36,7 @@
 			
 			$.ajax({
 				type: "get",
-				url: "/mountain/member/join/nicknameDupCheck",
+				url: "/mountain/member/nicknameDupCheck",
 				data: {inputNickname:inputNickname}
 			}).done(function(data) {
 				console.log("닉네임 중복 검사");
@@ -69,19 +69,19 @@
 		//닉네임 수정을 했다면 중복 검사를 해주세요.
 		//만약 키 값을 눌렀다면?
 		function nnKeyUp(){
+			$("#nicknameDupCheck").removeAttr("disabled"); // 버튼 비활성화 해제
 			$("#checkedNn").val('');
 			$("#modify").click(function(e) {
 				e.preventDefault();
 				if($("#checkedNn").val() == ''){
 					alert("닉네임 중복 확인을 해주세요.");
 					return false;
-				})
+				} else {
 				$("#modifyForm1").submit();
-			 
-			
+				}
+			});
 		}
 		$("#inputNickname").keyup(nnKeyUp);
-		
 		
 		
 	/* 주소 값을 합쳐서 name으로 보내기 */
@@ -156,10 +156,10 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="staticNickname" class="col-sm-2 col-form-label">닉네임</label>
+    <label for="inputNickname" class="col-sm-2 col-form-label">닉네임</label>
     <div class="col-sm-10">
-      <input type="text" name="nickname" class="form-control-plaintext" id="staticNickname" value="${sessionScope.authUser.nickname }" required>
-    </div>
+      <input type="text" name="nickname" class="form-control-plaintext" id="inputNickname" value="${sessionScope.authUser.nickname }" required>
+  
     <!-- 닉네임 중복검사 -->
     <small class="form-text" style="color: tomato" id="nicknameNull">
 		닉네임을 입력해주세요.
@@ -171,10 +171,11 @@
 		중복된 닉네임입니다.
  	</small>
  
-    <button type="button" class="btn btn-primary" id="nicknameDupCheck" >닉네임 중복 확인</button>
+    <button type="button" class="btn btn-primary" id="nicknameDupCheck" disabled>닉네임 중복 확인</button>
     <input type="hidden" id="checkedNn" value="">
    </div>
-
+  </div>
+  
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">이메일</label>
     <div class="col-sm-10" id="staticEmail">
