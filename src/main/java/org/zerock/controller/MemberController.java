@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.member.MEmailDTO;
+import org.zerock.domain.member.MLocDTO;
 import org.zerock.domain.member.MemberVO;
 import org.zerock.service.member.MemberService;
 
@@ -151,6 +152,13 @@ public class MemberController {
 
 				emailDTO.emailSplit(user.getEmail());
 				session.setAttribute("emailDTO", emailDTO);
+				
+				// 주소 정보 쪼개기 - 세션에 담기
+				MLocDTO locDiv = new MLocDTO();
+				
+				locDiv.locSplit(user.getLoc());
+				session.setAttribute("locDiv", locDiv);
+				
 
 				return new ResponseEntity<>("success", HttpStatus.OK);
 			}
@@ -247,6 +255,7 @@ public class MemberController {
 			log.info(user);
 			log.info(service);
 			log.info(member);
+			log.info(member.getLoc());
 			MemberVO findMember = service.getMemberId(user.getId());
 
 			boolean checkMember = service.checkMember(findMember.getId(), member.getId());
@@ -268,6 +277,11 @@ public class MemberController {
 					emailDTO.emailSplit(member.getEmail());
 					session.setAttribute("emailDTO", emailDTO);
 					// 수정된 이메일 정보를 세션에 저장
+					
+					MLocDTO locDiv = new MLocDTO();
+					locDiv.locSplit(member.getLoc());
+					session.setAttribute("locDiv", locDiv);
+					// 수정된 주소 정보 정보를 세션에 저장
 
 					return "/member/myHome";
 
@@ -279,6 +293,7 @@ public class MemberController {
 			// 세션에 로그인 정보가 없으면
 			return "redirect:/member/login";
 		}
+		log.info("수정 실패");
 		return "redirect:/index.jsp";
 		//혹시나 수정 실패시 홈으로 이동 
 	}

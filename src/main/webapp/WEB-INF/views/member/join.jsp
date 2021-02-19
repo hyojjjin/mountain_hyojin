@@ -203,8 +203,8 @@
         
         /* 주소 값을 합쳐서 name으로 보내기 */
         function setLocInput() {
-        	var loc = $("#sample3_postcode").val() + "|" + $("#sample3_address").val() + " " +
-        	$("#sample3_detailAddress").val() + $("#sample3_extraAddress").val();
+        	var loc = $("#sample3_postcode").val() + "@" + $("#sample3_address").val() + "@" +
+        	$("#sample3_detailAddress").val() + "@" + $("#sample3_extraAddress").val();
         	$("#loc-input").val(loc);
         }
   
@@ -213,7 +213,7 @@
         $("#sample3_detailAddress").keyup(setLocInput);
         $("#sample3_extraAddress").change(setLocInput);
         
-
+    });
 </script>
 
 <title>산산산</title>
@@ -309,7 +309,7 @@
 		 <input id="textEmail" name="textEmail" value="${param.textEmail}"  placeholder="이메일을 선택하세요."> 
  		<select id="select">
  				
-         	    <option value="" disabled selected>E-Mail 선택</option>
+         	    <option value="disabled" id=selected>E-Mail 선택</option>
 	            <option value="naver.com" id="naver.com">naver.com</option>
 	            <option value="hanmail.net" id="hanmail.net">hanmail.net</option>
 	            <option value="gmail.com" id="gmail.com">gmail.com</option>

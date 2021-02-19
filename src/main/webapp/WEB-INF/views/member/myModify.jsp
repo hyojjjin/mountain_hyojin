@@ -86,8 +86,8 @@
 		
 	/* 주소 값을 합쳐서 name으로 보내기 */
         function setLocInput() {
-        	var loc = $("#sample3_postcode").val() + "|" + $("#sample3_address").val() + " " +
-        	$("#sample3_detailAddress").val() + $("#sample3_extraAddress").val();
+        	var loc = $("#sample3_postcode").val() + "@" + $("#sample3_address").val() + "@" +
+        	$("#sample3_detailAddress").val() + "@" + $("#sample3_extraAddress").val();
         	$("#loc-input").val(loc);
         }
   
@@ -115,9 +115,9 @@
         	$("#email-input").val(email);
         }
         
-        $("#select").change(setEmailInput);
+         $("#select").change(setEmailInput);
         $("#emailFront").keyup(setEmailInput);
-        $("#emailSelect").keyup(setEmailInput);    
+        $("#emailSelect").keyup(setEmailInput);
         
         /* 비밀번호 값을 수정하면 pattern 멘트 */
         function showPwPattern() {
@@ -149,6 +149,23 @@
       </small>
     </div>
   </div>
+   <div class="form-group row">
+    <label for="pwConfirm" class="col-sm-2 col-form-label">비밀번호 확인</label>
+    <div class="col-sm-10">
+      <input type="password" name="pwConfirm" class="form-control" id="pwConfirm"  value="${sessionScope.authUser.password }">
+      
+      <c:if test="${errors.pwNotMatch }" >
+      	<small class="form-text" style="color: tomato">
+      		비밀번호가 일치하지 않습니다.
+      	</small>
+      </c:if>
+      <c:if test="${errors.memberPwConfirm }">
+      	<small class="form-text" style="color: tomato">
+      		비밀번호 확인을 입력해주세요.
+      	</small>
+      </c:if>
+    </div>
+   </div>  
   <div class="form-group row">
     <label for="staticName" class="col-sm-2 col-form-label">이름</label>
     <div class="col-sm-10">
@@ -183,31 +200,30 @@
  		<span>@</span>
 		 <input id="emailSelect" value="${emailDTO.emailSelect }" placeholder="이메일을 선택하세요." required> 
  		<select id="select">
-         	   <option value="" disabled selected>E-Mail 선택</option>
+         	   <option value="disabled" id="selected">E-Mail 선택</option>
 	            <option value="naver.com" id="naver.com">naver.com</option>
 	            <option value="hanmail.net" id="hanmail.net">hanmail.net</option>
 	            <option value="gmail.com" id="gmail.com">gmail.com</option>
 	            <option value="nate.com" id="nate.com">nate.com</option>
 	            <option value="directly" id="textEmail">직접 입력하기</option>
 	        </select>
-	    <input type="hidden" name="email" id="email-input" />
+	    <input type="hidden" name="email" id="email-input" value="${sessionScope.authUser.email }"/>
    <%--    <input type="text" name="email" class="form-control-plaintext" id="staticEmail" value="${sessionScope.authUser.email }"> --%>
     </div>
   </div>
   
   
   <div class="form-group row">
-    <label for="staticLoc" class="col-sm-2 col-form-label">주소</label>
+    <label for="loc-input" class="col-sm-2 col-form-label">주소</label>
     <div class="col-sm-10">
-      <input type="text" name="loc" class="form-control-plaintext" id="staticLoc" value="${authUser.loc }">
-	//주소는 어떻게 나눠서 꺼내야하나,,,,,,,,,,,,,,,,,,
+
+	  <input type="hidden" class="form-control" id="loc-input" name="loc" value="${authUser.loc }">
 	<!-- //주소 api input 태그	 -->	 
 	<br> 
-	<input type="text" id="sample3_postcode" placeholder="우편번호">
-	<input type="button" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
-	<input type="text" id="sample3_address" placeholder="주소"><br>
-	<input type="text" id="sample3_detailAddress" placeholder="상세주소" value="">
-	<input type="text" id="sample3_extraAddress" placeholder="참고항목">
+      <input type="text" id="sample3_postcode" placeholder="우편번호" value="${locDiv.postcode }"><br>
+  	  <input type="text" id="sample3_address" placeholder="주소" value="${locDiv.address }"><br>
+	  <input type="text" id="sample3_detailAddress" placeholder="상세주소" value="${locDiv.detailAddress }">
+	  <input type="text" id="sample3_extraAddress" placeholder="참고항목" value="${locDiv.extraAddress }">
     <c:if test="${errors.memberLoc }">
     	<small class="form-text" style="color: tomato">
      		주소를 입력해주세요.

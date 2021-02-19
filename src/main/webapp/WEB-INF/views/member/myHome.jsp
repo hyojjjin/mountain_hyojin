@@ -116,7 +116,11 @@ $(document).ready(function() {
   <div class="form-group row">
     <label for="staticLoc" class="col-sm-2 col-form-label">주소</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticLoc" value="${authUser.loc }">
+      <input type="hidden" readonly class="form-control-plaintext" id="staticLoc" value="${authUser.loc }">
+      <input type="text" id="sample3_postcode" placeholder="우편번호" value="${locDiv.postcode }"><br>
+  	  <input type="text" id="sample3_address" placeholder="주소" value="${locDiv.address }"><br>
+	  <input type="text" id="sample3_detailAddress" placeholder="상세주소" value="${locDiv.detailAddress }">
+	  <input type="text" id="sample3_extraAddress" placeholder="참고항목" value="${locDiv.extraAddress }">
     </div>
   </div>
 
@@ -124,16 +128,6 @@ $(document).ready(function() {
 
 <form method="post" action="/mountain/wish/register.do">
 	<h3>산킷리스트 삽입 예정</h3>
-	<div class="card">
-		<a href="${root }/wish/list">
-			<span class="card-body">산킷리스트 ${wishCount }</span>
-		</a>
-	</div>
-		//찜등록해보깅
-		//되다가 왜 안대는거야??????
-		<input type="hidden" name="member_no" value="222">
-		<input type="hidden" name="mountain_no" value="17">
-		<button type="submit" class="btn btn-primary">찜 등록</button>
 </form>
 
 
@@ -143,17 +137,10 @@ $(document).ready(function() {
 		<button type="submit" class="btn btn-primary">회원 정보 수정</button>
 	</a>	
 	
-	//만약 세션이 만료되었다면 (로그아웃 되었습니다.) 인폼
-	
-<%-- 	<!-- ##탈퇴 버튼 -->
-	<a href="/member/delete">
-		<button type="submit" id="memberDelete" class="btn btn-primary" data-userId="${authUser.id }">회원 탈퇴</button>
-	</a> --%>
 	
 	<!-- ##탈퇴 버튼 - 모달 -->
 	<button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#memberDeleteModal" data-whatever="@mdo">회원 탈퇴 모달</button>
-	//@는 뭐지?
-	
+
 	<div class="modal fade" id="memberDeleteModal" tabindex="-1" aria-labelledby="memberDeleteModal" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
