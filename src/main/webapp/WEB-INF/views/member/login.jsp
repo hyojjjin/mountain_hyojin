@@ -17,62 +17,8 @@
   src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
-<script>
-	$(document).ready(function() {
-		
-		$('#idNull').hide();
-		$('#pwNull').hide(); 
-		
-		$("#loginButton").click(function(e) {
-		e.preventDefault(); //submit 버튼의 기본 기능(submit) 을 막음!
-			$('#idNull').hide(); 
-			$('#pwNull').hide();
-			
-		var inputId = $('#inputId').val();
-		var inputPw = $('#inputPw').val();
-			
-		if (inputId == '') {
-			$('#idNull').show();
-		}
-		
-		if (inputPw == '') {
-			$('#pwNull').show();
-		}
-		
-		if (inputId == '' || inputPw == '') {
-			return;
-		} else {
-			$('#idNull').hide();
-			$('#pwNull').hide();
-		}
-		
-			$.ajax("/mountain/member/login", {
-				type: "post",
-				data: {inputId:inputId, inputPw:inputPw}
-			
-			}).fail(function() {
-				console.log("등록 실패");
-					alert("아이디 또는 비밀번호를 확인해주세요.");
-			//		window.location.href="/mountain/login.jsp";		
-				
-			}).done(function(data, status, xhr) {
-				console.log("등록 성공");
-				window.location.href="/mountain/index.jsp";				
-		
-			});
-		});
-/* 		
-		 엔터키로 focus 이동 
- 		function enterNextFocus(next){
-			var keyCode = window.event.keyCode;
-			if(keyCode == 13) {
-				console.log("엔터키 누름");
-				document.getElementById(next).focus();
-				$().eq(0).focus();
-			}
-		}   */
-    });
-</script>
+
+<script type="text/javascript" src="${root }/resources/js/member/login.js"></script>
 
 <title>산산산</title>
 </head>

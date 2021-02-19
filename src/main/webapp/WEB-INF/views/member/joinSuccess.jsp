@@ -18,15 +18,11 @@
   src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
-
-
-<title>Insert title here</title>
+<title>산산산</title>
 </head>
 <body>
 
-
 	<m:topNav />
-
 
 	<div class="media">
 		<div class="media-body">
@@ -38,7 +34,6 @@
 	<a href="${root }/member/login">
 		<button type="submit" class="btn btn-primary">로그인</button>
 	</a>
-
 
 </body>
 </html>
