@@ -61,7 +61,6 @@ $(document).ready(function() {
 		}
 		$("#inputNickname").keyup(nnKeyUp);
 		
-		
 		// ##주소 값을 합쳐서 name="loc"로 보내기
         function setLocInput() {
         	var loc = $("#sample3_postcode").val() + "@" + $("#sample3_address").val() + "@" +

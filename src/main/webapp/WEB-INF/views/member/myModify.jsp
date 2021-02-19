@@ -24,45 +24,53 @@
 <body>
 
 <m:topNav />
+<%-- <form>
+<table>
+  <tr>
+  	<th>이름<th>
+    <td>
+    	 <input type="text" readonly name="name" class="form-control-plaintext" id="staticName" value="${sessionScope.authUser.name }">
+    </td>
+  </tr>
+  <tr> 
+  	<th>별명<th>
+  	<td>
+  		<input type="text" name="nickname" class="form-control-plaintext" id="inputNickname" value="${sessionScope.authUser.nickname }" required>
+  		 <!-- 닉네임 중복검사 -->
+	    <small class="form-text" style="color: tomato" id="nicknameNull">
+			닉네임을 입력해주세요.
+	    </small>
+	    <small class="form-text" style="color: DodgerBlue" id="nicknameOk" >
+			사용 가능한 닉네임입니다.
+	 	</small>
+	    <small class="form-text" style="color: tomato" id="nicknameDup" >
+			중복된 닉네임입니다.
+	 	</small>
+	 
+	    <button type="button" class="btn btn-primary" id="nicknameDupCheck" disabled>닉네임 중복 확인</button>
+	    <input type="hidden" id="checkedNn" value="">
+    </td>
+    <td></td>
+  </tr>
+</table>
+
+</form> --%>
+
+
+
+
+
+
+
 
 	<form method="post" action="${root }/member/myModify" id="modifyForm1">
-	<table>
-		<!-- 아이디, 이름, 닉네임 -->
-	  <tr> 
-	  	<!-- 아이디 -->
-	    <td>
-	    
-	
-	    
-	    
-	    </td>
-	    <!-- 이름 --> 
-	    <td>
-	    
-	    </td>
-	    <!-- 닉네임 -->
-	    <td>
-	    
-	    </td>
-
-	  </tr>
-	  
-	  <!-- //이메일, 주소 -->
-	  <tr> 
-	 	 <!-- 이메일 -->
-	    <td></td> 
-	  	<!-- 주소 -->
-	    <td></td>
-	  </tr>
-	</table>
-
-
 	  <div class="form-group row">
 	    <label for="staticId" class="col-sm-2 col-form-label">아이디</label>
 	    <div class="col-sm-10">
 	      <input type="text" readonly name="id" class="form-control-plaintext" id="staticId" value="${sessionScope.authUser.id }">
 	    </div>
 	  </div>
+
 	  <div class="form-group row">
 	    <label for="staticPw" class="col-sm-2 col-form-label">비밀번호</label>
 	    <div class="col-sm-10">
@@ -95,12 +103,12 @@
 	      <input type="text" readonly name="name" class="form-control-plaintext" id="staticName" value="${sessionScope.authUser.name }">
 	    </div>
 	  </div>
-	  <div class="form-group row">
+	   <div class="form-group row">
 	    <label for="inputNickname" class="col-sm-2 col-form-label">닉네임</label>
 	    <div class="col-sm-10">
 	      <input type="text" name="nickname" class="form-control-plaintext" id="inputNickname" value="${sessionScope.authUser.nickname }" required>
-	  
-	    <!-- 닉네임 중복검사 -->
+	   
+	     <!-- 닉네임 중복검사 -->
 	    <small class="form-text" style="color: tomato" id="nicknameNull">
 			닉네임을 입력해주세요.
 	    </small>
@@ -113,7 +121,7 @@
 	 
 	    <button type="button" class="btn btn-primary" id="nicknameDupCheck" disabled>닉네임 중복 확인</button>
 	    <input type="hidden" id="checkedNn" value="">
-	   </div>
+ 	   </div>
 	  </div>
 	  
 	  <div class="form-group row">
@@ -141,7 +149,8 @@
 		  <input type="hidden" class="form-control" id="loc-input" name="loc" value="${authUser.loc }">
 		<br> 
 		<!-- //주소 api input 태그	 -->	 
-	      <input type="text" id="sample3_postcode" placeholder="우편번호" value="${locDiv.postcode }"><br>
+	      <input type="text" id="sample3_postcode" placeholder="우편번호" value="${locDiv.postcode }">
+	      <input type="button" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
 	  	  <input type="text" id="sample3_address" placeholder="주소" value="${locDiv.address }"><br>
 		  <input type="text" id="sample3_detailAddress" placeholder="상세주소" value="${locDiv.detailAddress }">
 		  <input type="text" id="sample3_extraAddress" placeholder="참고항목" value="${locDiv.extraAddress }">
