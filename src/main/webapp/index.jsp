@@ -19,25 +19,45 @@
   src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
-<title>mountain conquest</title>
+<style>
+<%-- 적용 X
+#navbarSupportedContent ul {
+	padding-left:0px;
+}
+
+#navbarSupportedContent li  {
+	display:inline;
+	border-left: 1px solide #c0c0c0;
+	padding:0px 10px 0px 10px;
+	margin:0px 50px 0px 50px;
+	}
+--%>
+</style>
+
+<title>산산산</title>
 </head>
 <body>
 <m:topNav />
 
 로그인 된 아이디 : ${authUser.id } <br>
 로그인 된 NO : ${authUser.no }
-
-<c:if test="${login }" >
-<div>modal</div>
-</c:if>
-
-<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-		<img src="<spring:url value='/resources/img/main/mountain_main1.png' />" class="d-block w-80" alt="...">
-    </div>
-  </div>
-</div>
+		
+	<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+	  <div class="carousel-inner">
+	    <div class="carousel-item active">
+			<img src="<spring:url value='/resources/img/main/mountain_main2.jpg' />" class="d-block center-block" width="auto" height="auto" alt="메인배너">
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="card" style="width: 18rem;">
+	  <img src="..." class="card-img-top" alt="...">
+	  <div class="card-body">
+	    <h5 class="card-title">산 이름</h5>
+	    <p class="card-text">산 정보</p>
+	    <a href="#" class="btn btn-primary">산 보기</a>
+	  </div>
+	</div>
 
 </body>
 </html>

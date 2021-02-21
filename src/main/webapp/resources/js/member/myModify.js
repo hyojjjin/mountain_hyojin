@@ -99,5 +99,6 @@ $(document).ready(function() {
         function showPwPattern() {
         	$("#pwPattern").show();
         }
+        $("#staticPw").keyup(showPwPattern);
                 
     });

@@ -25,72 +25,78 @@
 <body>
 <m:topNav />
 
-<!--내 정보 보기 -->
-<form>
-	<div class="container">
-		<div class="row">
-			<div class="col border mr-3">
-				<div class="my-2 mx-3">
-					<h4 class="py-3">프로필</h4>
-					<div class="px-4">
-						<dl>
-							<dt class="d-inline">
-								아이디
-							</dt>
-							<dd class="d-inline"> ${sessionScope.authUser.id }
-							</dd>
-						</dl>
-						<dl>
-							<dt class="d-inline">
-								이름
-							</dt>
-							<dd class="d-inline"> ${sessionScope.authUser.name } 
-							</dd>
-						</dl>
-						<dl>
-							<dt class="d-inline">
-								별명
-							</dt>
-							<dd class="d-inline"> ${sessionScope.authUser.nickname }
-							</dd>
-						</dl>
-						<dl>
-							<dt class="d-inline">
-								비밀번호
-							</dt>
-							<dd class="d-inline"> ****  
-							</dd>
-						</dl>
-						<dl>
-							<dt class="d-inline">
-								이메일
-							</dt>
-							<dd class="d-inline"> ${sessionScope.authUser.email } 
-							</dd>
-						</dl>
-						<dl>
-							<dt class="d-inline">
-								주소
-							</dt>
-							<dd class="d-inline"> ${locDiv.postcode } ${locDiv.address } ${locDiv.detailAddress } ${locDiv.extraAddress }
-							</dd>
-						</dl>
+<div class="container-sm">
+   <div class="row">
+      <div class="col-12 col-sm-6 offset-sm-3">
+			<!--내 정보 보기 -->
+			<form>
+				<div class="container">
+					<div class="row">
+						<div class="col border mr-3">
+							<div class="my-2 mx-3">
+								<h4 class="py-3">프로필</h4>
+								<div class="px-4">
+									<dl>
+										<dt class="d-inline">
+											아이디
+										</dt>
+										<dd class="d-inline"> ${sessionScope.authUser.id }
+										</dd>
+									</dl>
+									<dl>
+										<dt class="d-inline">
+											이름
+										</dt>
+										<dd class="d-inline"> ${sessionScope.authUser.name } 
+										</dd>
+									</dl>
+									<dl>
+										<dt class="d-inline">
+											별명
+										</dt>
+										<dd class="d-inline"> ${sessionScope.authUser.nickname }
+										</dd>
+									</dl>
+									<dl>
+										<dt class="d-inline">
+											비밀번호
+										</dt>
+										<dd class="d-inline"> ****  
+										</dd>
+									</dl>
+									<dl>
+										<dt class="d-inline">
+											이메일
+										</dt>
+										<dd class="d-inline"> ${sessionScope.authUser.email } 
+										</dd>
+									</dl>
+									<dl>
+										<dt class="d-inline">
+											주소
+										</dt>
+										<dd class="d-inline"> ${locDiv.postcode } ${locDiv.address } ${locDiv.detailAddress } ${locDiv.extraAddress }
+										</dd>
+									</dl>
+								</div>
+								<a href="/mountain/member/myModify">
+									<input type="button" class="btn btn-primary mb-4" value="수정">
+								</a>
+								<input type="button" class="btn btn-primary mb-4 float-center" data-toggle="modal" data-target="#memberDeleteModal" value="탈퇴">
+								<modal:memberDeleteModal />
+							</div>
+						</div>
+						<div class="w-100"></div>
+					 	<!--<div class="col border">
+							conquest 등 정보 들어올 예정!
+						</div>
+						<div class="col">col</div>
+						<div class="col">col</div> -->
 					</div>
-					<a href="/mountain/member/myModify">
-						<input type="button" class="btn btn-primary mb-4" value="수정"></a>
-					<input type="button" class="btn btn-primary mb-4" data-toggle="modal" data-target="#memberDeleteModal" value="탈퇴">
-					<modal:memberDeleteModal />
 				</div>
-			</div>
-		 	<div class="col border">
-				conquest 등 정보 들어올 예정!
-			</div>
-			<!-- <div class="w-100"></div>
-			<div class="col">col</div>
-			<div class="col">col</div> -->
-		</div>
-	</div>
-</form>
-
+			</form>
+      </div>
+   </div>
+</div>
 </body>
 </html>
