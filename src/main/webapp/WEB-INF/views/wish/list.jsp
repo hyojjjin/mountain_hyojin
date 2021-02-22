@@ -23,20 +23,23 @@
 <m:topNav />
 
 <ul>
-	<c:forEach items="wishList" var="wish">
+	<c:forEach items="${wishList }" var="wish" varStatus="status">
+	
+		<div class="card" style="width: 18rem;">
+		  <img src="..." class="card-img-top" alt="...">
+		  <div class="card-body">
+		    <h5 class="card-title">${mountain.mname }</h5> <i class="far fa-heart"></i> <i class="fas fa-heart"></i>
+		    	    
+		    <p class="card-text"></p>
+		    <a href="#" class="btn btn-primary">Go somewhere</a>
+		  </div>
+		</div>
+	
 		<li> ${wish.member_no }:${wish.mountain_no }</li>
-		//임시로 넣어두깅
 	</c:forEach>
 </ul>
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">산 이름</h5> <i class="far fa-heart"></i> <i class="fas fa-heart"></i>
-    //세션에 담긴 ${mountain_no }로 산 정보 가져오기
-    <p class="card-text">산 정보</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
+
+
 
 
 </body>
