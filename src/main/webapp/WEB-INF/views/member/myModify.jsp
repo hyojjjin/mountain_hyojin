@@ -17,11 +17,11 @@
   src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- 주소 api -->
-<script type="text/javascript" src="${root }/resources/js/member/addressAPI.js"></script> <!-- 주소 api -->
 <script type="text/javascript" src="${root }/resources/js/member/myModify.js"></script>
 
-<script>
+<!-- <script>
 //왜 스크립트 주소를 사용할 수 없지???
+//=>학원에선 되넹???
 $(document).ready(function() {
 		
 		// ##패스워드 패턴 확인 멘트 - hide
@@ -128,7 +128,7 @@ $(document).ready(function() {
     });
     
 </script>
-
+ -->
 <title>산산산</title>
 </head>
 <body>
@@ -257,5 +257,6 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="${root }/resources/js/member/addressAPI.js"></script> <!-- 주소 api -->
 </body>
 </html>

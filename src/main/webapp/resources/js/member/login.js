@@ -38,7 +38,7 @@
 				
 			}).done(function(data, status, xhr) {
 				console.log("등록 성공");
-				window.location.href="/mountain/index.jsp";				
+				window.location.href="/mountain/";				
 		
 			});
 		});

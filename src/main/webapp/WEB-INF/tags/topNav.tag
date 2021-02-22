@@ -1,6 +1,8 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="m" tagdir="/WEB-INF/tags"%>
+
 
 <!-- <style>
 #navbarSupportedContent li {
@@ -33,6 +35,9 @@
 			      <li class="nav-item">
 			       <a class="nav-link" href="${root }/member/login">로그인</a>
 			      </li>
+			      <li class="nav-item">
+			       <a class="nav-link" href="${root }/admin/index">관리자 페이지</a>
+			      </li>
 			</ul>
 		  </c:if>
 		  
@@ -60,7 +65,7 @@
 		    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 		    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 		</form> -->
-
+ 	<m:search />
 	</div>
 </nav> 
 
