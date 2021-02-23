@@ -19,7 +19,7 @@ public class WishServiceImpl implements WishService{
 	
 	@Override
 	public void register(WishVO wish) {
-		mapper.insertSelectKey(wish);
+		mapper.addWish(wish);
 	}
 	
 	@Override
@@ -38,7 +38,7 @@ public class WishServiceImpl implements WishService{
 	}
 	
 	@Override
-	public boolean remove(@Param("member_no")Long member_no, @Param("mountain_no")Long mountain_no) {
+	public boolean remove(@Param("memberNo")Long member_no, @Param("mountainNo")Long mountain_no) {
 		return mapper.delete(member_no, mountain_no) == 1;
 	}
 	

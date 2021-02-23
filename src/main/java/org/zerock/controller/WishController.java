@@ -28,7 +28,7 @@ public class WishController {
 	private MountainService mtService;
 	
 	// ##찜 등록
-	@PostMapping("register.do")
+	@PostMapping("register")
 	public void register(WishVO wish) {
 		
 	service.register(wish);
@@ -47,16 +47,16 @@ public class WishController {
 	@GetMapping("/list")
 	public String list(Model model, WishVO wish, HttpSession session) {
 		//long타입인데 string으로 들어가서 그런거야? 그럼 어떠케해야대는거야..
-		List<WishVO> wishList = service.getMemberMem(wish.getMember_no());
+		List<WishVO> wishList = service.getMemberMem(wish.getMemberNo());
 		model.addAttribute("wishList", wishList);
 		log.info(wishList);
 		
 		MountainVO mountain = new MountainVO();
-		mountain = mtService.get(wish.getMountain_no());
+		mountain = mtService.get(wish.getMountainNo());
 		model.addAttribute("mountain", mountain);
 		
 		
-		int wishCount = (int) service.wishSize(wish.getMember_no());
+		int wishCount = (int) service.wishSize(wish.getMemberNo());
 		session.setAttribute("wishCount", wishCount);
 		// 리스트에서 찜 개수 파악해서 세션에 담기
 		

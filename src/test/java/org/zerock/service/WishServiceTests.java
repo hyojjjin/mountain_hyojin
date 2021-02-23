@@ -39,8 +39,8 @@ public class WishServiceTests {
 	@Test
 	public void testRegister() {
 		WishVO wish = new WishVO();
-		wish.setMember_no(77L);
-		wish.setMountain_no(7L);
+		wish.setMemberNo(77L);
+		wish.setMountainNo(7L);
 
 		
 		int before = mapper.getList().size();

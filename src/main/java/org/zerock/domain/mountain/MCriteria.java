@@ -1,33 +1,22 @@
 package org.zerock.domain.mountain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class MCriteria {
-	private int pageNum;
+
+	private int curPage;
 	private int amount;
 	
-	private String type;
 	private String keyword;
 	
 	public MCriteria() {
-		this(1, 10);
+		this(1, 9);// 3 * 3 정렬
 	}
 
-	public MCriteria(int pageNum, int amount) {
-		this.pageNum = pageNum;
-		this.amount = amount;
+	public MCriteria(int curPage, int amount) {
+	    this.curPage = curPage;
+	    this.amount = amount;
 	}
 	
-	public String[] getTypeArr() {
-		if (this.type == null) {
-			return new String[] {};
-		} else {
-			return type.split("");
-		}
-	}
 }

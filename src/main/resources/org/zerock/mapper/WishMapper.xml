@@ -5,7 +5,7 @@
 	<mapper namespace="org.zerock.mapper.WishMapper">
 	
 	<!--#찜 등록-->
-	<insert id="insertSelectKey" >
+	<insert id="addWish" >
 		<selectKey keyProperty="no" order="BEFORE" resultType="long">
 			SELECT seq_member.nextval FROM dual
 		</selectKey>

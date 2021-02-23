@@ -32,12 +32,12 @@ public class WishMapperTests {
 	@Test
 	public void testInsertSelectKey() {
 		WishVO wish = new WishVO();
-		wish.setMember_no(555L);
-		wish.setMountain_no(5L);
+		wish.setMemberNo(555L);
+		wish.setMountainNo(5L);
 		
 		int before = mapper.getList().size();
 		
-		mapper.insertSelectKey(wish);
+		mapper.addWish(wish);
 		
 		int after = mapper.getList().size();
 		
