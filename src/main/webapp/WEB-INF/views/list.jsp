@@ -29,12 +29,12 @@ var available = '${available}';
 <script>
 $(document).ready(function() {
 	$("#submitWish").click(function(e) {
-		var mountain = $("#mountainNo").val();
-		var user = $("#mountainNo").val();
+		var mountainNo = $("#mountainNo").val();
+		var userNo = $("#mountainNo").val();
 		$.ajax({
 			type: "get",
 			url: "/mountain/wish/register",
-			data: {mountain:, user:}
+			data: {mountainNo:mountainNO, userNo:userNO}
 		}).done(function(data) {	
 		}).fail(function() {
 			
@@ -97,9 +97,13 @@ $(document).ready(function() {
 					    		  <c:param name="keyword">${cri.keyword }</c:param>
 					    	    </c:url>
 		                		<a href="${getUrl }" class="btn btn-success">Go Into Detail</a>
-		                		<input type="hidden" value="${authUser.no }" id="userNo">
-		                		<input type="hidden" value="${mountain.no}" id="mountainNo">
+		                		
+		                		<!--wish  -->
+		                		<form class="d-inline" method="post" action="${root }/wish/register" >
+		                		<input type="hidden" value="${authUser.no }" name="userNo" id="userNo">
+		                		<input type="hidden" value="${mountain.no}" name="mountainNo" id="mountainNo">
 		                		<button type="submit" class="btn btn-primary" id="submitWish" >찜</button>
+		                		</form>
 		               		</div>
 	              		</div>
 		        	</td>

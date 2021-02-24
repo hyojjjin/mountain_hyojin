@@ -1,4 +1,5 @@
 	$(document).ready(function() {
+
 	
 		// ##아이디 중복 확인 멘트 - hide
 		$('#idOk').hide();
@@ -13,7 +14,6 @@
 		$('#nicknameOk').hide();
 		$('#nicknameDup').hide();
 		$('#nicknameNull').hide();	
-		
 		
 		// ##아이디 중복 검사 버튼
 		$("#idDupCheck").click(function(e) {
@@ -151,7 +151,7 @@
  			
  			
  		}); 
- 		
+ 			
     	// ##이메일 주소 선택
         $('#email-select1').change(function() {
             if ($('#email-select1').val() == 'directly') {
@@ -164,20 +164,6 @@
                 $('#textEmail').val($('#email-select1').val());
             }
         });
-        
-        // 모르게땅,,
-        // ##이메일 값이 null이 아니라면 id="emailError" hide
-        function hideEmailError() {
-        	if($("#emailFront").val() != null && ($("#textEmail").val() != null || $("#email-select1").val() != null)) {
-        	$("#emailError").hide();
-       		}
-       	}
-               
-       $("#emailFront").keyup(hideEmailError);
-       $("#textEmail").keyup(hideEmailError);
-       $("#textEmail").change(hideEmailError);
-       $("#email-select1").change(hideEmailError);
-       
         
         // ##이메일 값을 합쳐서 name="email"으로 보내기 
         function setEmailInput() {
@@ -194,6 +180,52 @@
         $("#sample3_address").change(setLocInput);
         $("#sample3_detailAddress").keyup(setLocInput);
         $("#sample3_extraAddress").change(setLocInput);
+        
+        
+        // ##작정 시 null Error hide
+        
+        // 아이디
+        $("#inputId").keyup(function() {
+        		$("#idNullError").hide();
+				$("#idNull").hide();
+        	});
+        
+        // 비밀번호
+        $("#password").keyup(function() {
+        		$("#pwNullError").hide();
+        });
+        
+        // 비밀번호 확인
+        $("#pwConfirm").keyup(function() {
+        		$("#pwCfNullError").hide();
+        });
+        
+        // 이름
+        $("#name").keyup(function() {
+        		$("#nameNull").hide();
+        });
+        
+        // 닉네임
+        $("#inputNickname").keyup(function() {
+        		$("#nicknameNullError").hide();
+				$("#nicknameNull").hide();
+        });
+        
+	      
+        // 모르게땅,,
+        // ##이메일 값이 null이 아니라면 id="emailError" hide
+        function hideEmailError() {
+        	if($("#emailFront").keyup(hideEmailError) && $("#textEmail").change(hideEmailError)) {
+        	$("#emailError").hide();
+       		}
+       	}
+               
+  //     $("#emailFront").keyup(hideEmailError);
+    //   $("#textEmail").keyup(hideEmailError);
+      // $("#textEmail").change(hideEmailError);
+       //$("#email-select1").change(hideEmailError);
+       
+
         
     });
     

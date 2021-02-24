@@ -103,7 +103,7 @@
 							</small>
 						</c:if>
 						<c:if test="${errors.memberPwConfirm }">
-							<small class="form-text" style="color: tomato">
+							<small class="form-text" style="color: tomato" id="pwCfNullError">
 								비밀번호 확인을 입력해주세요.
 							</small>
 						</c:if>
@@ -144,7 +144,7 @@
 						
 						<!-- 이름 check -->
 						<c:if test="${errors.memberName }">
-							<small class="form-text" style="color: tomato">
+							<small class="form-text" style="color: tomato" id="nameNull">
 								이름을 입력해주세요.
 							</small>
 						</c:if>
@@ -164,7 +164,7 @@
 						
 						<!-- 닉네임 check -->
 						<c:if test="${errors.memberNickname }">
-							<small class="form-text" style="color: tomato">
+							<small class="form-text" style="color: tomato" id="nicknameNullError">
 								닉네임을 입력해주세요.
 							</small>
 						</c:if>

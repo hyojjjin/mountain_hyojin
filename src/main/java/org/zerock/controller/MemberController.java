@@ -205,7 +205,7 @@ public class MemberController {
 		return "redirect:/index.jsp";
 	}
 
-	// ##joinErrors
+	// ##Errors
 	public void validate(Map<String, Boolean> errors, MemberVO member) {
 		checkEmpty(errors, member.getId(), "memberId");
 		checkEmpty(errors, member.getPassword(), "memberPw");
@@ -229,6 +229,11 @@ public class MemberController {
 
 		if (!pwRegex) {
 			errors.put("pwPatternError", true);
+		}
+		
+		// 주소값 @@@ 확인
+		if(member.getLoc() == "@@@") {
+			errors.put("memberLoc2", true);
 		}
 	}
 

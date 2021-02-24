@@ -30,10 +30,10 @@ $(document).ready(function() {
 	});
 	
 	//select-search값 남기기
-	function() {
+/* 	function() {
 		
 		
-	}	
+	}	 */
 	
 /* 	만약 산이라면 산
 	만약 맛집이라면 맛집

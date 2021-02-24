@@ -70,11 +70,6 @@
 								비밀번호가 일치하지 않습니다.
 							</small>
 						</c:if>
-						<c:if test="${errors.memberPwConfirm }">
-							<small class="form-text" style="color: tomato">
-								비밀번호 확인을 입력해주세요.
-							</small>
-						</c:if>
 					</div>
 				</div>  
 
@@ -125,14 +120,19 @@
 				<div class="form-group row">
 					<label for="loc-input" class="col-sm-2 col-form-label">주소</label>
 					<div class="col-sm-10">
-						<input type="hidden" class="form-control" id="loc-input" name="loc" value="${authUser.loc }" required>
+						<input type="text" class="form-control" id="loc-input" name="loc" value="${authUser.loc }" >
 						<!-- //주소 api input 태그	 -->	 
-						<input type="text" id="sample3_postcode" placeholder="우편번호" value="${locDiv.postcode }">
+						<input type="text" id="sample3_postcode" placeholder="우편번호" value="${locDiv.postcode }" >
 						<input type="button" onclick="sample3_execDaumPostcode()" value="우편번호 찾기"><br>
-						<input type="text" id="sample3_address" placeholder="주소" value="${locDiv.address }"><br>
+						<input type="text" id="sample3_address" placeholder="주소" value="${locDiv.address }" ><br>
 						<input type="text" id="sample3_detailAddress" placeholder="상세주소" value="${locDiv.detailAddress }">
 						<input type="text" id="sample3_extraAddress" placeholder="참고항목" value="${locDiv.extraAddress }">
 						<c:if test="${errors.memberLoc }">
+							<small class="form-text" style="color: tomato">
+								주소를 입력해주세요.
+							</small>
+						</c:if>
+						<c:if test="${errors.memberLoc2 }">
 							<small class="form-text" style="color: tomato">
 								주소를 입력해주세요.
 							</small>
