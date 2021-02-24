@@ -25,6 +25,27 @@ var isManager = ('${authUser.manager}' == 1);
 var available = '${available}';
 </script>
 <script src="${root }/resources/js/mountain/list.js"></script>
+
+<script>
+$(document).ready(function() {
+	$("#submitWish").click(function(e) {
+		var mountain = $("#mountainNo").val();
+		var user = $("#mountainNo").val();
+		$.ajax({
+			type: "get",
+			url: "/mountain/wish/register",
+			data: {mountain:, user:}
+		}).done(function(data) {	
+		}).fail(function() {
+			
+		});		
+		
+	})
+	
+	
+});
+</script>
+
 <title>산산산</title>
 </head>
 <body>
@@ -76,6 +97,9 @@ var available = '${available}';
 					    		  <c:param name="keyword">${cri.keyword }</c:param>
 					    	    </c:url>
 		                		<a href="${getUrl }" class="btn btn-success">Go Into Detail</a>
+		                		<input type="hidden" value="${authUser.no }" id="userNo">
+		                		<input type="hidden" value="${mountain.no}" id="mountainNo">
+		                		<button type="submit" class="btn btn-primary" id="submitWish" >찜</button>
 		               		</div>
 	              		</div>
 		        	</td>
