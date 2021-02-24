@@ -85,9 +85,9 @@ var root = '${root}';
 									</dl>
 								</div>
 								<a href="/mountain/member/myModify">
-									<input type="button" class="btn btn-primary mb-4" value="수정">
+									<input type="button" class="btn btn-success mb-4" value="수정">
 								</a>
-								<input type="button" class="btn btn-primary mb-4 float-center" data-toggle="modal" data-target="#memberDeleteModal" value="탈퇴">
+								<input type="button" class="btn btn-success mb-4 float-center" data-toggle="modal" data-target="#memberDeleteModal" value="탈퇴">
 								<modal:memberDeleteModal />
 							</div>
 						</div>

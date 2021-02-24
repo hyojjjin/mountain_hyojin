@@ -40,7 +40,6 @@
 	
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
@@ -87,13 +86,9 @@
 		     </c:otherwise>
 	     </c:choose>
 	     </c:if>
-
-	    
 	</div>
-</nav>
+	<br>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light p-0 m-0">
-	<div class="collapse navbar-collapse ml-5 p-0" id="navbarSupportedContent">
 		<a class="navbar-brand" href="${root }/index.jsp">
 			<img src="<spring:url value='/resources/img/mountainLogo.png' />" class="center-block mb-3" height="100" width="auto" alt="마운팀">
 		</a>
@@ -103,11 +98,11 @@
 		    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 		</form> -->
  	<m:search />
-	</div>
-</nav> 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light p-0 m-0">
-	<div class="collapse navbar-collapse d-flex justify-content-around nav3" id="navbarSupportedContent">
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
 		<ul class="navbar-nav">
 			<li class="nav-item dropdown">
 		        <a class="nav-link dropdown-toggle" href="${root }/list" id="navbarDropdown" role="button"
@@ -138,5 +133,4 @@
 	        	<a class="nav-link" href="${root }/notice/list"><b>공지사항</b></a>
 	     	</li>
 		</ul>
-	</div>
 </nav>

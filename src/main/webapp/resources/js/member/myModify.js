@@ -59,29 +59,19 @@ $(document).ready(function() {
 				}
 			});
 		}
+		
+		
 		$("#inputNickname").keyup(nnKeyUp);
 		
-		// ##주소 값을 합쳐서 name="loc"로 보내기
-        function setLocInput() {
-        	var loc = $("#sample3_postcode").val() + "@" + $("#sample3_address").val() + "@" +
-        	$("#sample3_detailAddress").val() + "@" + $("#sample3_extraAddress").val();
-        	$("#loc-input").val(loc);
-        }
-  
-        $("#sample3_postcode").change(setLocInput);
-        $("#sample3_address").change(setLocInput);
-        $("#sample3_detailAddress").keyup(setLocInput);
-        $("#sample3_extraAddress").change(setLocInput);
-       
-        
+		
     	// ##이메일 주소 선택
-        $('#select').change(function() {
-            if ($('#select').val() == 'directly') {
+        $('#email-select1').change(function() {
+            if ($('#email-select1').val() == 'directly') {
                 $('#emailSelect').attr("disabled", false);
                 $('#emailSelect').val("");
                 $('#emailSelect').focus();
             } else {
-                $('#emailSelect').val($('#select').val());
+                $('#emailSelect').val($('#email-select1').val());
             }
         });
         
@@ -91,7 +81,7 @@ $(document).ready(function() {
         	$("#email-input").val(email);
         }
         
-         $("#select").change(setEmailInput);
+        $("#email-select1").change(setEmailInput);
         $("#emailFront").keyup(setEmailInput);
         $("#emailSelect").keyup(setEmailInput);
         
@@ -100,5 +90,18 @@ $(document).ready(function() {
         	$("#pwPattern").show();
         }
         $("#staticPw").keyup(showPwPattern);
-                
+        
+        $("#sample3_postcode").change(setLocInput);
+        $("#sample3_address").change(setLocInput);
+        $("#sample3_detailAddress").keyup(setLocInput);
+        $("#sample3_extraAddress").change(setLocInput);
+       
     });
+    
+// ##주소 값을 합쳐서 name="loc"로 보내기
+function setLocInput() {
+	var loc = $("#sample3_postcode").val() + "@" + $("#sample3_address").val() + "@" +
+	$("#sample3_detailAddress").val() + "@" + $("#sample3_extraAddress").val();
+	$("#loc-input").val(loc);
+}
+  
