@@ -26,9 +26,6 @@
 
 <m:topNav />
 
-로그인 된 아이디 : ${authUser.id } <br>
-로그인 된 NO : ${authUser.no }
-
 <div class="container-sm">
 	<div class="row">
 		<div class="col-12 col-sm-6 offset-sm-3">

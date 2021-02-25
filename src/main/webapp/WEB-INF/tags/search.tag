@@ -28,6 +28,14 @@ $(document).ready(function() {
 			window.location.href="/mountain/notice/list?&keyword=" + keyword;
 		}
 	});
+/* 	
+	function setOptionSelect() {
+		if($('#hiddenSelect').val == m) {
+			
+			
+		}
+	}
+		 */
 	
 	//select-search값 남기기
 /* 	function() {
@@ -52,18 +60,17 @@ $(document).ready(function() {
 
 </style> -->
 
-<div class="container">
- 		<form class="form-inline justify-content-center ml-5">
-			<select class="form-control" id="select-search">
-			  <option id="m">산</option>
-			  <option id="r">맛집</option>
-			  <option id="n">공지</option>
-			</select>
+<div class="container d-flex justify-content-around">
+ 	<!-- 	<form class="form-inline justify-content-center ml-5"> -->
+ 		<form class="form-inline ml-5">
+ 		<select class="form-control" id="select-search" name="searchSelect">
+			  <option >산</option>
+			  <option >맛집</option>
+			  <option >공지</option>
+		</select>
 			
-		    <input class="form-control mr-sm-2" type="search" name="search" value="${page.cri.keyword }${pages.cri.keyword}" id="search" placeholder="Search" aria-label="Search">
+		    <input class="form-control mr-sm-2" type="search" name="search" id="search" placeholder="Search" aria-label="Search">
 		    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchButton"><i class="fas fa-search"></i></button>
-		<!-- 	
-		    	<input class="form-control mr-sm-1" type="search" name="search" placeholder="Search">
-		    	<button class="btn btn-outline-success my-2 mr-5"><i class="fas fa-search"></i></button> -->
+
 		</form> 
 </div>
