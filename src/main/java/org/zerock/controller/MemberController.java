@@ -232,7 +232,7 @@ public class MemberController {
 		}
 		
 		// 주소값 @@@ 확인
-		if(member.getLoc() == "@@@") {
+		if(member.getLoc().equals("@@@")) {
 			errors.put("memberLoc2", true);
 		}
 	}

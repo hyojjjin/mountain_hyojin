@@ -104,7 +104,7 @@
 					<div class="col-sm-10" id="staticEmail">
 						<input type="text" id="emailFront" value="${emailDTO.emailFront }" class="form-control d-inline" style="width:30%" placeholder="이메일 입력" required > 
 						<span>@</span>
-						<input id="emailSelect" value="${emailDTO.emailSelect }" class="form-control d-inline" style="width:30%" placeholder="이메일을 선택하세요." required> 
+						<input id="textEmail" value="${emailDTO.emailSelect }" class="form-control d-inline" style="width:30%" placeholder="이메일 선택" required> 
 						<select id="email-select1">
 							<option value="disabled" id="selected">E-Mail 선택</option>
 							<option value="naver.com" id="naver.com">naver.com</option>
@@ -113,6 +113,9 @@
 							<option value="nate.com" id="nate.com">nate.com</option>
 							<option value="directly" id="textEmail">직접 입력하기</option>
 						</select>
+						<small class="form-text" style="color: gray" id="emailPattern">
+							이메일 형식에 알맞게 입력해주세요. (예 : kim@mounteam.com)
+						</small>
 						<input type="hidden" name="email" id="email-input" value="${sessionScope.authUser.email }"/>
 					</div>
 				</div>
@@ -127,13 +130,13 @@
 						<input type="text" id="sample3_address" placeholder="주소" value="${locDiv.address }" ><br>
 						<input type="text" id="sample3_detailAddress" placeholder="상세주소" value="${locDiv.detailAddress }">
 						<input type="text" id="sample3_extraAddress" placeholder="참고항목" value="${locDiv.extraAddress }">
-						<c:if test="${errors.memberLoc }">
+<%-- 						<c:if test="${errors.memberLoc }">
 							<small class="form-text" style="color: tomato">
 								주소를 입력해주세요.
 							</small>
-						</c:if>
+						</c:if> --%>
 						<c:if test="${errors.memberLoc2 }">
-							<small class="form-text" style="color: tomato">
+							<small class="form-text" style="color: tomato" id="locNullError">
 								주소를 입력해주세요.
 							</small>
 						</c:if>

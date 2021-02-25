@@ -38,7 +38,7 @@
 						<div class="input-group">	
 						    <input type="text" name="id" class="form-control" id="inputId" pattern="[a-z0-9]{4,20}" required value=${param.id }>
 						    <span class="input-group-btn">
-						   		<button type="button" class="btn btn-success" id="idDupCheck" >아이디 중복 확인</button>
+						   		<button type="button" class="btn btn-success" id="idDupCheck">아이디 중복 확인</button>
 						    </span>
 				    	</div>
 				    	
@@ -71,7 +71,7 @@
 				<div class="form-group row">
 					<label for="password" class="col-sm-2 col-form-label">비밀번호</label>
 					<div class="col-sm-10">
-						<input type="password" name="password" class="form-control" id="password" pattern="([a-zA-Z]+\d{1}\w*)|(\d+[a-zA-Z]{1}\w*)" required>
+						<input type="password" name="password" class="form-control" id="password" pattern="([a-zA-Z]+\d{1}\w*)|(\d+[a-zA-Z]{1}\w*)" value="${param.password }" required>
 						
 						<!-- 비밀번호 check -->
 						<c:if test="${not errors.pwPatternError }">
@@ -94,7 +94,7 @@
 				<div class="form-group row">
 					<label for="pwConfirm" class="col-sm-2 col-form-label">비밀번호 확인</label>
 					<div class="col-sm-10">
-						<input type="password" name="pwConfirm" class="form-control" id="pwConfirm" required>
+						<input type="password" name="pwConfirm" class="form-control" id="pwConfirm" value="${param.pwConfirm }" required>
 						 
 						<!-- 비밀번호 확인 check -->
 						<c:if test="${errors.pwNotMatch }" >
@@ -114,7 +114,7 @@
 					<label for="email" class="col-sm-2 col-form-label">E-mail</label>
 					<div class="col-sm-10">
 						<input type="hidden" name="email" id="email-input" />
-						<input type="text" name="emailFront" id="email" value="${param.emailFront}" class="form-control d-inline" style="width:30%" placeholder="이메일 입력" required> 
+						<input type="text" name="emailFront" id="emailFront" value="${param.emailFront}" class="form-control d-inline" style="width:30%" placeholder="이메일 입력" required> 
 						<span>@</span>
 						<input id="textEmail" name="textEmail" class="form-control d-inline" style="width:30%" placeholder="이메일 선택" required> 
 							<select id="email-select1">
@@ -125,15 +125,16 @@
 								<option value="nate.com" id="nate.com">nate.com</option>
 								<option value="directly" id="textEmail">직접 입력하기</option>
 							</select>
-						<small class="form-text" style="color: gray" id="emailPattern"></small>
+						<small class="form-text" style="color: gray" id="emailPattern">
+							이메일 형식에 알맞게 입력해주세요. (예 : kim@mounteam.com)
+						</small>
 						
 						<!-- 이메일 check -->
 						<c:if test="${errors.memberEmail }">
 							<small class="form-text" id="emailError" style="color: tomato">
 								이메일을 입력해주세요.
 							</small>
-						</c:if>
-					   
+						</c:if>					   
 					</div>
 				</div>
 							  
@@ -157,7 +158,7 @@
 						<div class="input-group">
 							<input type="text" name="nickname" class="form-control" id="inputNickname" required value=${param.nickname }>    
 							<span class="input-group-btn">
-								<button type="button" class="btn btn-success" id="nicknameDupCheck" >닉네임 중복 확인</button>
+								<button type="button" class="btn btn-success" id="nicknameDupCheck">닉네임 중복 확인</button>
 							</span>
 						</div> 
 						<input type="hidden" id="checkedNn" value="">
@@ -196,7 +197,7 @@
 						
 						<!-- 주소 check -->
 						<c:if test="${errors.memberLoc }">
-							<small class="form-text" style="color: tomato">
+							<small class="form-text" style="color: tomato" id="locNullError">
 								주소를 입력해주세요.
 							</small>
 						</c:if>
